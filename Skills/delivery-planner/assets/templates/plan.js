@@ -105,6 +105,15 @@
     $('result-context').hidden=$('filter-summary').hidden && !state.selected;
     requestDraw();
   }
+  function clearSelection() {
+    if(!state.selected)return;
+    state.selected=null;
+    document.querySelectorAll('.milestone.selected,.milestone.connected').forEach(card=>card.classList.remove('selected','connected'));
+    $('roadmap')?.classList.remove('has-selection');
+    $('clear-selection').hidden=true;
+    $('selection-summary').textContent='All dates and statuses are as reported';
+    applyDisplay();
+  }
   function render() {
     if (observer) observer.disconnect();
     graphSignature=null;graphRoutes.clear();
@@ -228,7 +237,7 @@
     Object.keys(filters).forEach(key=>$(`filter-${key}`).addEventListener(key==='search'?'input':'change',event=>{filters[key]=event.target.value;render();}));
     $('reset-filters').addEventListener('click',()=>{resetFilters();render();});
     $('show-dependencies').addEventListener('change',event=>{state.showDeps=event.target.checked;requestDraw();});
-    $('clear-selection').addEventListener('click',()=>{state.selected=null;render();$('view-content').focus({preventScroll:true});});
+    $('clear-selection').addEventListener('click',()=>{clearSelection();($('board-scroll')||$('view-content')).focus({preventScroll:true});});
     $('settings-button').addEventListener('click',()=>{$('settings-dialog').showModal();$('settings-button').setAttribute('aria-expanded','true');});
     for (const key of Object.keys(display)) $(`display-${key}`).addEventListener('change',event=>{display[key]=event.target.checked;applyDisplay();});
     for (const [id,visible] of [['show-all-panels',true],['hide-all-panels',false]]) $(id).addEventListener('click',()=>{Object.keys(display).forEach(key=>display[key]=visible);state.showDeps=visible;$('show-dependencies').checked=visible;applyDisplay();});
@@ -241,9 +250,18 @@
       if(event.key==='ArrowRight')i=(i+1)%tabs.length;else if(event.key==='ArrowLeft')i=(i+tabs.length-1)%tabs.length;else if(event.key==='Home')i=0;else if(event.key==='End')i=tabs.length-1;else return;
       event.preventDefault();tabs[i].click();tabs[i].focus();
     });
-    document.addEventListener('click',event=>{const button=event.target.closest('[data-open],.milestone');if(button)detail(button.dataset.open||button.dataset.id);});
-    $('milestone-dialog').addEventListener('click',event=>{if(event.target===$('milestone-dialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close();}});
-    $('milestone-dialog').addEventListener('close',()=>{if(lastFocus?.isConnected)lastFocus.focus({preventScroll:true});});
+    document.addEventListener('click',event=>{
+      const button=event.target.closest('[data-open],.milestone');
+      if(button){detail(button.dataset.open||button.dataset.id);return;}
+      if(!event.target.closest('dialog'))clearSelection();
+    });
+    document.addEventListener('keydown',event=>{
+      if(event.key!=='Escape'||event.defaultPrevented||document.querySelector('dialog[open]')||!state.selected)return;
+      event.preventDefault();clearSelection();($('board-scroll')||$('view-content')).focus({preventScroll:true});
+    });
+    $('milestone-dialog').addEventListener('cancel',()=>clearSelection());
+    $('milestone-dialog').addEventListener('click',event=>{if(event.target===$('milestone-dialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom){clearSelection();event.target.close();}}});
+    $('milestone-dialog').addEventListener('close',()=>{const focus=state.selected ? lastFocus : ($('board-scroll')||$('view-content'));if(focus?.isConnected)focus.focus({preventScroll:true});});
     $('diagnostics').hidden=!diagnostics.length;
     $('diagnostics').innerHTML=`<summary>${diagnostics.length} validation note${diagnostics.length===1?'':'s'}</summary><ul>${diagnostics.map(d=>`<li><strong>${escape(d.object_id||d.path)}</strong>: ${escape(d.message)}</li>`).join('')}</ul>`;
     let printDetails=[];
