@@ -37,7 +37,7 @@ def test_schema_and_realistic_example():
     Draft202012Validator.check_schema(json.loads((SKILL_ROOT/'references/plan.schema.json').read_text()))
     result = read_plan(EXAMPLE)
     assert result.valid and not result.diagnostics
-    assert len(result.data['milestones']) == 24
+    assert len(result.data['milestones']) == 32
     assert {m['status'] for m in result.data['milestones']} == {'not_started','on_track','at_risk','blocked','done'}
     assert {e['kind'] for e in result.data['dependencies']} == {'requires','enables','relates_to'}
 

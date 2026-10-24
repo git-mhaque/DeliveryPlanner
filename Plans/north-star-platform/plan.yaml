@@ -24,6 +24,15 @@ periods:
   start: '2027-03-01'
   end: '2027-05-31'
 
+- id: q1-fy28
+  label: Q1 FY28
+  start: '2027-06-01'
+  end: '2027-08-31'
+- id: q2-fy28
+  label: Q2 FY28
+  start: '2027-09-01'
+  end: '2027-11-30'
+
 streams:
 - id: features
   title: Feature Delivery
@@ -435,6 +444,103 @@ milestones:
   executive_visible: false # Valid options: true, false
   target_date: '2027-05-28'
 
+- id: personalised-discovery
+  title: Personalised discovery preview
+  stream: features
+  target_period: q1-fy28
+  owner_team: search-experience
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: [NS-106] # Direct Jira/Rally epic keys; [] is valid.
+  outcome: Pilot users receive relevant suggestions based on their explicitly chosen interests.
+  notes: Future planning assumption for the fictional example; scope will be refined after the preceding release.
+  executive_visible: true # Valid options: true, false
+  target_date: '2027-07-23'
+- id: ingestion-self-service
+  title: Self-service source onboarding
+  stream: platform
+  target_period: q1-fy28
+  owner_team: platform-engineering
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: [PLAT-207] # Direct Jira/Rally epic keys; [] is valid.
+  outcome: Partner teams can register and validate a new content source without platform intervention.
+  notes: Future planning assumption for the fictional example; scope will be refined after the preceding release.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-07-09'
+- id: continuous-access-review
+  title: Continuous access review
+  stream: security
+  target_period: q1-fy28
+  owner_team: trust-security
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: [SEC-306] # Direct Jira/Rally epic keys; [] is valid.
+  outcome: Service owners receive evidence of access changes and resolve exceptions through a review workflow.
+  notes: Future planning assumption for the fictional example; scope will be refined after the preceding release.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-08-06'
+- id: second-adoption-wave
+  title: Second adoption wave
+  stream: adoption
+  target_period: q1-fy28
+  owner_team: customer-adoption
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: [E4105] # Direct Jira/Rally epic keys; [] is valid.
+  outcome: Three additional fictional customer cohorts adopt the platform with measured activation and support outcomes.
+  notes: Future planning assumption for the fictional example; scope will be refined after the preceding release.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-08-20'
+- id: multilingual-discovery
+  title: Multilingual discovery launch
+  stream: features
+  target_period: q2-fy28
+  owner_team: search-experience
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: [NS-107] # Direct Jira/Rally epic keys; [] is valid.
+  outcome: Users can discover approved content across the first three supported languages.
+  notes: Future planning assumption for the fictional example; scope will be refined after the preceding release.
+  executive_visible: true # Valid options: true, false
+  target_date: '2027-10-22'
+- id: adaptive-capacity
+  title: Adaptive capacity controls
+  stream: platform
+  target_period: q2-fy28
+  owner_team: site-reliability
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: [PLAT-208] # Direct Jira/Rally epic keys; [] is valid.
+  outcome: The platform adjusts capacity to demand while respecting service latency and cost budgets.
+  notes: Future planning assumption for the fictional example; scope will be refined after the preceding release.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-10-08'
+- id: compliance-evidence
+  title: Automated compliance evidence
+  stream: security
+  target_period: q2-fy28
+  owner_team: trust-security
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: [SEC-307] # Direct Jira/Rally epic keys; [] is valid.
+  outcome: Reviewers can retrieve traceable access and retention evidence without manual report assembly.
+  notes: Future planning assumption for the fictional example; scope will be refined after the preceding release.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-11-05'
+- id: adoption-value-review
+  title: Adoption value review
+  stream: adoption
+  target_period: q2-fy28
+  owner_team: customer-adoption
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: [E4106] # Direct Jira/Rally epic keys; [] is valid.
+  outcome: Sponsors review adoption, search success and operational cost evidence to agree the next investment priorities.
+  notes: Future planning assumption for the fictional example; scope will be refined after the preceding release.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-11-19'
+
 dependencies:
 - from: indexing-foundation
   to: relevance-baseline
@@ -520,6 +626,31 @@ dependencies:
   to: search-pilot
   kind: relates_to # Valid options: requires, enables, relates_to
   note: The onboarding and release teams coordinate cohort access.
+
+- from: search-ga
+  to: personalised-discovery
+  kind: requires # Valid options: requires, enables, relates_to
+- from: zero-downtime-reindex
+  to: ingestion-self-service
+  kind: requires # Valid options: requires, enables, relates_to
+- from: access-certification
+  to: continuous-access-review
+  kind: requires # Valid options: requires, enables, relates_to
+- from: adoption-wave-one
+  to: second-adoption-wave
+  kind: requires # Valid options: requires, enables, relates_to
+- from: personalised-discovery
+  to: multilingual-discovery
+  kind: requires # Valid options: requires, enables, relates_to
+- from: ingestion-self-service
+  to: adaptive-capacity
+  kind: requires # Valid options: requires, enables, relates_to
+- from: continuous-access-review
+  to: compliance-evidence
+  kind: requires # Valid options: requires, enables, relates_to
+- from: second-adoption-wave
+  to: adoption-value-review
+  kind: requires # Valid options: requires, enables, relates_to
 
 reporting:
   overall_health: at_risk # Valid options: on_track, at_risk, blocked, unknown

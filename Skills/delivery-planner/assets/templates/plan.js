@@ -62,7 +62,7 @@
     const visible = new Set(items.map(m => m.id));
     const printLinks = plan.dependencies.filter(e => visible.has(e.from) || visible.has(e.to));
     return `<section class="board-section" aria-label="${executive ? 'Strategic milestones' : 'Delivery roadmap'}">
-      <div class="board-scroll" id="board-scroll" role="region" aria-label="Roadmap timeline" tabindex="0"><div class="roadmap" id="roadmap" style="--cols:${plan.periods.length}"><div class="board-head">${heads}</div>${rows}${items.map(m=>card(m,true)).join('')}<svg class="dependency-layer" id="dependency-layer" aria-hidden="true"></svg></div></div>
+      <div class="board-scroll" id="board-scroll" role="region" aria-label="Roadmap timeline" aria-description="Use the four arrow keys to scroll the plan. Tab moves between milestones; Enter opens details." tabindex="0"><div class="roadmap" id="roadmap" style="--cols:${plan.periods.length}"><div class="board-head">${heads}</div>${rows}${items.map(m=>card(m,true)).join('')}<svg class="dependency-layer" id="dependency-layer" aria-hidden="true"></svg></div></div>
       <div class="print-roadmap" aria-hidden="true">${items.map(m=>`<article><p>${escape(streams[m.stream])} · ${escape(periods[m.target_period].label)}</p>${card(m)}</article>`).join('')}</div>
       ${statusLegend()}<div class="print-dependencies"><strong>Dependencies (including linked milestones outside this view)</strong>${printLinks.map(e => `<div>${escape(byId[e.from].title)} ${e.kind === 'relates_to' ? '↔' : '→'} ${escape(byId[e.to].title)} · ${escape(kinds[e.kind])}</div>`).join('')}</div></section>`;
   }
@@ -127,7 +127,17 @@
     if ($('roadmap')) {
       observer = new ResizeObserver(requestDraw);observer.observe($('board-scroll'));
       document.querySelectorAll('.graph-node').forEach(el=>observer.observe(el));
-      $('board-scroll').addEventListener('scroll',requestDraw,{passive:true});
+      const scroll=$('board-scroll');
+      scroll.addEventListener('scroll',requestDraw,{passive:true});
+      scroll.addEventListener('pointerdown',event=>{
+        if(!event.target.closest('button,a,input,select,textarea,summary'))scroll.focus({preventScroll:true});
+      });
+      scroll.addEventListener('keydown',event=>{
+        if(event.altKey||event.ctrlKey||event.metaKey||event.shiftKey||event.defaultPrevented)return;
+        const delta={ArrowLeft:[-80,0],ArrowRight:[80,0],ArrowUp:[0,-80],ArrowDown:[0,80]}[event.key];
+        if(!delta)return;
+        event.preventDefault();scroll.scrollBy({left:delta[0],top:delta[1],behavior:'instant'});
+      });
     }
     applyDisplay();
   }

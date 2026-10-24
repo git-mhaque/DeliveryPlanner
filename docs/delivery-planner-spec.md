@@ -351,7 +351,7 @@ Maintain these styles in the shared renderer templates, so every generated plan 
 - Position nodes deterministically within their target period using target dates when present; use stable source order for undated items and ties. Horizontal placement indicates order within a period, not an exact day-scale axis. Show the actual target date on the node.
 - Pack nodes into non-overlapping positions using measured card heights and spacing. Use available predecessor positions to align related milestones within a stream. Filtering may compact the arrangement. Never infer or change delivery dates from layout.
 - Show compact nodes with title, status, scope, target date/period, and epic summary. Keep outcome and ownership in accessible details. Backlog Epic View retains its detailed cards.
-- Keep normal scrolling and keyboard access. Pan/zoom, stream collapse, and drag-to-edit are future enhancements; this iteration does not persist user positions.
+- Support normal scrolling and all four arrow keys when the roadmap or a milestone is focused. Each arrow scrolls its axis by 80 pixels; modified keys and controls outside the roadmap retain their normal behavior. Clicking empty roadmap space focuses it without moving the viewport. Zoom, stream collapse, and drag-to-edit are future enhancements; this iteration does not persist user positions.
 - Start the board directly with period headings. Keep Show dependencies in Display settings and Clear selection beside the visible selection summary, without a separate roadmap title/subtitle bar. The dependency preference applies to Delivery and Executive roadmaps and is retained while visiting Backlog Epic View. Clearing selection returns focus to the view content.
 - Show milestone title, status, planned/unplanned tag, owner team, and related epic keys on cards or in accessible details depending on available space.
 - Offer filters for stream, owner/contributing team, status, tag, and epic.
@@ -436,12 +436,12 @@ The maintained example should contain:
 - Three explicit fiscal periods: Q2 FY27 through Q4 FY27, with the sample June–May fiscal convention documented in YAML comments.
 - Four streams: Feature Delivery, Platform, Security, and Adoption & Operations.
 - Five or six fictional teams with contributions across streams.
-- Approximately 20–24 milestones with meaningful outcome descriptions and believable sequencing.
+- Approximately 32 milestones with meaningful outcome descriptions and believable sequencing.
 - Every supported milestone status and both planned/unplanned tags.
 - A small amount of unplanned work, such as a relevance regression or an infrastructure remediation, with visible impact and explanation.
 - All three relationship kinds, including cross-team, cross-stream, same-period, and cross-period connections. Keep the hard prerequisite graph acyclic.
 - Synthetic Jira and Rally epic keys stored only in milestone `epic_ids`; one milestone associated with multiple epics; one epic spanning multiple milestones and periods; and one milestone without an epic. No separate epic definitions are needed.
-- Roughly six to eight executive-visible milestones, plus substantive highlights, changes, risks, and open/resolved decisions.
+- Roughly ten executive-visible milestones, plus substantive highlights, changes, risks, and open/resolved decisions.
 - A mix of short and long card titles and several crowded/empty cells to exercise realistic layouts.
 - An explicit reporting date chosen to make the depicted states coherent and reproducible.
 
