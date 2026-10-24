@@ -1,0 +1,71 @@
+schema_version: 1
+
+plan:
+  id: __PLAN_ID__
+  title: __PLAN_TITLE__
+  as_of: null # YYYY-MM-DD; required before publishing.
+  # summary: Describe the programme and desired outcomes.
+  # reporting_owner: Accountable programme lead
+
+# Define explicit dates; labels never determine the fiscal calendar.
+periods: []
+# - id: q2-fy27
+#   label: Q2 FY27
+#   start: "2026-09-01"
+#   end: "2026-11-30"
+
+streams: []
+# - id: platform
+#   title: Platform
+
+teams: []
+# - id: platform-team
+#   name: Platform Engineering
+
+milestones: []
+# - id: foundation-ready
+#   title: Foundation ready
+#   stream: platform
+#   target_period: q2-fy27
+#   owner_team: platform-team
+#   contributing_teams: []
+#   status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+#   tag: planned # Valid options: planned, unplanned
+#   epic_ids: [PLAT-101] # Direct Jira/Rally keys; [] is valid. No separate epic list.
+#   outcome: Describe the completed outcome.
+#   notes: Explain any risk or blocker.
+#   executive_visible: false # Valid options: true, false
+
+dependencies: []
+# - from: foundation-ready
+#   to: pilot-ready
+#   kind: requires # Valid options: requires, enables, relates_to
+#   note: Explain the relationship.
+
+reporting:
+  overall_health: unknown # Valid options: on_track, at_risk, blocked, unknown
+  # health_note: Explain the assessment.
+  highlights: []
+  changes_since_last_report: []
+  risks: []
+  # - id: sample-risk
+  #   title: Describe the risk
+  #   severity: medium # Valid options: low, medium, high
+  #   owner: Accountable lead
+  #   milestone_ids: [foundation-ready]
+  #   mitigation: Describe the response.
+  decisions_needed: []
+  # - id: sample-decision
+  #   title: Describe the decision
+  #   owner: Decision maker
+  #   due_date: "2026-11-01"
+  #   status: open # Valid options: open, resolved
+  #   milestone_ids: [foundation-ready]
+  #   ask: Describe the specific decision needed.
+
+view:
+  default_audience: delivery # Valid options: delivery, executive, backlog_epic
+  show_dependencies: false # Valid options: true, false
+
+publish:
+  directory: null # Absolute folder, or relative to the workspace root.

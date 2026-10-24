@@ -1,0 +1,3 @@
+interface:
+  display_name: "Delivery Planner"
+  short_description: "Build multi-team delivery plans from YAML"

@@ -1,0 +1,590 @@
+# Fictional public example. All names, tracker keys, events, and delivery claims are invented.
+schema_version: 1
+
+plan:
+  id: north-star-platform
+  title: North Star Platform Delivery Plan
+  as_of: '2026-10-24'
+  reporting_owner: Programme Lead · North Star Platform
+  summary: A shared roadmap for better discovery, a resilient platform, and a confident rollout. Fictional public
+    example.
+
+# Example fiscal calendar: June–May, named by the ending year. Dates are authoritative.
+periods:
+- id: q2-fy27
+  label: Q2 FY27
+  start: '2026-09-01'
+  end: '2026-11-30'
+- id: q3-fy27
+  label: Q3 FY27
+  start: '2026-12-01'
+  end: '2027-02-28'
+- id: q4-fy27
+  label: Q4 FY27
+  start: '2027-03-01'
+  end: '2027-05-31'
+
+streams:
+- id: features
+  title: Feature Delivery
+  description: Search experiences and customer outcomes.
+- id: platform
+  title: Platform
+  description: Ingestion, scale, and service resilience.
+- id: security
+  title: Security
+  description: Trust, access, and compliance controls.
+- id: adoption
+  title: Adoption & Operations
+  description: Enablement, readiness, and reliable handover.
+
+teams:
+- id: search-experience
+  name: Search Experience
+- id: platform-engineering
+  name: Platform Engineering
+- id: trust-security
+  name: Trust & Security
+- id: developer-enablement
+  name: Developer Enablement
+- id: site-reliability
+  name: Site Reliability
+- id: customer-adoption
+  name: Customer Adoption
+
+milestones:
+- id: relevance-baseline
+  title: Relevance baseline established
+  stream: features
+  target_period: q2-fy27
+  owner_team: search-experience
+  contributing_teams:
+  - customer-adoption
+  status: done # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - NS-101
+  outcome: A repeatable evaluation suite covers the 50 most common search journeys.
+  notes: Benchmark approved on 16 October. Synthetic evaluation data and success criteria are available to every
+    stream.
+  executive_visible: false # Valid options: true, false
+  target_date: '2026-10-16'
+- id: search-pilot
+  title: Unified search pilot
+  stream: features
+  target_period: q2-fy27
+  owner_team: search-experience
+  contributing_teams:
+  - trust-security
+  - customer-adoption
+  status: on_track # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - NS-101
+  - NS-102
+  outcome: Two pilot cohorts can search projects and documents from one entry point.
+  notes: Integration is complete. Permission-model verification is the final gate before pilot access.
+  executive_visible: true # Valid options: true, false
+  target_date: '2026-11-20'
+- id: semantic-preview
+  title: Semantic search preview
+  stream: features
+  target_period: q3-fy27
+  owner_team: search-experience
+  contributing_teams:
+  - platform-engineering
+  status: at_risk # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - NS-103
+  - PLAT-203
+  outcome: Pilot users can find relevant content using natural-language queries.
+  notes: The ranking prototype is ready. Production-like testing depends on the pending embeddings-capacity decision.
+  executive_visible: true # Valid options: true, false
+  target_date: '2027-02-15'
+- id: saved-search-alerts
+  title: Saved searches & alerts
+  stream: features
+  target_period: q3-fy27
+  owner_team: search-experience
+  contributing_teams:
+  - developer-enablement
+  status: on_track # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - NS-104
+  outcome: Users can save recurring searches and receive a daily change digest.
+  notes: Notification contracts and opt-out behavior are agreed; implementation is proceeding in parallel with the
+    pilot.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-01-29'
+- id: federated-search
+  title: Cross-workspace discovery
+  stream: features
+  target_period: q4-fy27
+  owner_team: search-experience
+  contributing_teams:
+  - trust-security
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - NS-105
+  outcome: Authorized users can discover content across linked workspaces.
+  notes: Delivery starts after tenant-isolation rules are implemented and reviewed.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-04-23'
+- id: search-ga
+  title: Search platform general availability
+  stream: features
+  target_period: q4-fy27
+  owner_team: search-experience
+  contributing_teams:
+  - platform-engineering
+  - trust-security
+  - site-reliability
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - NS-103
+  - NS-106
+  outcome: Search is ready for broad adoption with performance and security evidence.
+  notes: Release criteria include load certification, access certification, and the semantic preview exit review.
+  executive_visible: true # Valid options: true, false
+  target_date: '2027-05-14'
+- id: indexing-foundation
+  title: Indexing foundation ready
+  stream: platform
+  target_period: q2-fy27
+  owner_team: platform-engineering
+  contributing_teams:
+  - site-reliability
+  status: done # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - PLAT-201
+  outcome: A repeatable ingestion pipeline supports the first three content sources.
+  notes: Recovery and replay checks passed on 9 October. The pilot integration environment is available.
+  executive_visible: false # Valid options: true, false
+  target_date: '2026-10-09'
+- id: index-lag-fix
+  title: Index freshness recovery
+  stream: platform
+  target_period: q2-fy27
+  owner_team: platform-engineering
+  contributing_teams:
+  - site-reliability
+  status: on_track # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: unplanned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - PLAT-202
+  outcome: Backlogged documents return to the agreed freshness window after bursts.
+  notes: Added following a synthetic peak-load exercise. Worker backpressure fixes are in validation.
+  executive_visible: false # Valid options: true, false
+  target_date: '2026-11-06'
+- id: embeddings-capacity
+  title: Embeddings capacity secured
+  stream: platform
+  target_period: q3-fy27
+  owner_team: platform-engineering
+  contributing_teams:
+  - site-reliability
+  status: at_risk # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - PLAT-203
+  outcome: Reserved compute supports semantic preview traffic and evaluation runs.
+  notes: The capacity reservation is awaiting approval. A smaller preview cohort is the fallback if funding is delayed.
+  executive_visible: true # Valid options: true, false
+  target_date: '2027-01-15'
+- id: zero-downtime-reindex
+  title: Zero-downtime reindexing
+  stream: platform
+  target_period: q3-fy27
+  owner_team: platform-engineering
+  contributing_teams:
+  - site-reliability
+  status: on_track # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - PLAT-201
+  - PLAT-204
+  outcome: Indexes can be rebuilt without interrupting active search sessions.
+  notes: Alias-switch rehearsals are passing in the integration environment.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-02-05'
+- id: regional-resilience
+  title: Regional recovery verified
+  stream: platform
+  target_period: q4-fy27
+  owner_team: site-reliability
+  contributing_teams:
+  - platform-engineering
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - PLAT-205
+  outcome: A regional failure can be recovered within the agreed recovery objective.
+  notes: The recovery exercise will use the reindexing workflow and service runbooks.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-04-16'
+- id: load-certification
+  title: Scale & latency certification
+  stream: platform
+  target_period: q4-fy27
+  owner_team: platform-engineering
+  contributing_teams:
+  - site-reliability
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - PLAT-201
+  - PLAT-206
+  outcome: Peak traffic meets the latency budget with documented capacity headroom.
+  notes: The certification uses a fixed synthetic workload so results can be compared across releases.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-04-30'
+- id: permission-model
+  title: Permission-aware query model
+  stream: security
+  target_period: q2-fy27
+  owner_team: trust-security
+  contributing_teams:
+  - search-experience
+  status: on_track # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - SEC-301
+  outcome: Pilot results respect document and project access permissions.
+  notes: The allow/deny matrix is agreed. Cross-source integration tests are the remaining work.
+  executive_visible: false # Valid options: true, false
+  target_date: '2026-11-13'
+- id: audit-gap
+  title: Audit coverage restored
+  stream: security
+  target_period: q2-fy27
+  owner_team: trust-security
+  contributing_teams:
+  - platform-engineering
+  status: done # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: unplanned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - SEC-302
+  outcome: Administrative index actions produce complete, traceable audit events.
+  notes: A gap found in the readiness review was corrected and rechecked on 21 October.
+  executive_visible: false # Valid options: true, false
+  target_date: '2026-10-21'
+- id: tenant-isolation
+  title: Tenant isolation controls
+  stream: security
+  target_period: q3-fy27
+  owner_team: trust-security
+  contributing_teams:
+  - search-experience
+  - platform-engineering
+  status: blocked # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - SEC-303
+  outcome: Cross-workspace access is bounded by an agreed tenant-isolation contract.
+  notes: Implementation is paused pending the product decision on shared-workspace ownership and exception handling.
+  executive_visible: true # Valid options: true, false
+  target_date: '2027-01-22'
+- id: security-review
+  title: Independent security review
+  stream: security
+  target_period: q3-fy27
+  owner_team: trust-security
+  contributing_teams:
+  - platform-engineering
+  status: on_track # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - SEC-304
+  outcome: Design and test evidence are reviewed before broad rollout.
+  notes: Review scope is agreed, with evidence collection underway across search and platform teams.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-02-19'
+- id: access-certification
+  title: Access controls certified
+  stream: security
+  target_period: q3-fy27
+  owner_team: trust-security
+  contributing_teams:
+  - search-experience
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - SEC-303
+  - SEC-304
+  outcome: Release evidence confirms permitted access and prevents cross-tenant disclosure.
+  notes: Certification follows closure of the independent review findings.
+  executive_visible: true # Valid options: true, false
+  target_date: '2027-02-26'
+- id: retention-controls
+  title: Retention & deletion controls
+  stream: security
+  target_period: q2-fy27
+  owner_team: trust-security
+  contributing_teams:
+  - platform-engineering
+  status: on_track # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - SEC-305
+  outcome: Expired content is removed from source indexes and derived representations.
+  notes: Policy scenarios are drafted; implementation can proceed independently of the tenant ownership decision.
+  executive_visible: false # Valid options: true, false
+  target_date: '2026-11-27'
+- id: service-readiness
+  title: Service ownership established
+  stream: adoption
+  target_period: q2-fy27
+  owner_team: site-reliability
+  contributing_teams:
+  - platform-engineering
+  - developer-enablement
+  status: done # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: [] # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  outcome: Service owners, alert routes, and support boundaries are agreed.
+  notes: The fictional readiness workshop closed on 14 October. This operational outcome is intentionally not linked
+    to an epic.
+  executive_visible: false # Valid options: true, false
+  target_date: '2026-10-14'
+- id: pilot-onboarding
+  title: Pilot cohorts onboarded
+  stream: adoption
+  target_period: q2-fy27
+  owner_team: customer-adoption
+  contributing_teams:
+  - search-experience
+  status: done # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - E4101
+  outcome: Two fictional cohorts have training, feedback channels, and success criteria.
+  notes: Preparation is complete. Cohort access opens when the unified search pilot is ready.
+  executive_visible: false # Valid options: true, false
+  target_date: '2026-10-23'
+- id: sdk-migration
+  title: Client SDK migration
+  stream: adoption
+  target_period: q3-fy27
+  owner_team: developer-enablement
+  contributing_teams:
+  - search-experience
+  - customer-adoption
+  status: at_risk # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - E4102
+  - NS-102
+  outcome: Pilot clients adopt a versioned API and retire their legacy search calls.
+  notes: One consumer team has competing delivery commitments. A phased migration is proposed to protect the pilot
+    exit date.
+  executive_visible: true # Valid options: true, false
+  target_date: '2027-02-12'
+- id: runbook-hardening
+  title: Recovery runbooks rehearsed
+  stream: adoption
+  target_period: q3-fy27
+  owner_team: site-reliability
+  contributing_teams:
+  - developer-enablement
+  status: blocked # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: unplanned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - E4103
+  outcome: On-call engineers can execute recovery steps without specialist support.
+  notes: The rehearsal environment needs access provisioning by the shared operations team. The request is open
+    and tracked by the reliability lead.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-02-26'
+- id: adoption-wave-one
+  title: First adoption wave
+  stream: adoption
+  target_period: q4-fy27
+  owner_team: customer-adoption
+  contributing_teams:
+  - developer-enablement
+  - search-experience
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - E4101
+  - E4104
+  outcome: The first wider cohort adopts the platform with measured support readiness.
+  notes: The launch sequence pairs onboarding with the completion of general-availability gates.
+  executive_visible: true # Valid options: true, false
+  target_date: '2027-05-21'
+- id: operational-handover
+  title: Operational handover complete
+  stream: adoption
+  target_period: q4-fy27
+  owner_team: site-reliability
+  contributing_teams:
+  - customer-adoption
+  - platform-engineering
+  status: not_started # Valid options: not_started, on_track, at_risk, blocked, done
+  tag: planned # Valid options: planned, unplanned
+  epic_ids: # Direct Jira/Rally epic keys; [] is valid. No separate epic definitions.
+  - E4103
+  - E4104
+  outcome: Steady-state teams own service health, recovery, and continuous improvement.
+  notes: The handover requires regional recovery evidence and feedback from the first adoption wave.
+  executive_visible: false # Valid options: true, false
+  target_date: '2027-05-28'
+
+dependencies:
+- from: indexing-foundation
+  to: relevance-baseline
+  kind: requires # Valid options: requires, enables, relates_to
+  note: The evaluation suite runs on the delivered indexing foundation.
+- from: indexing-foundation
+  to: search-pilot
+  kind: requires # Valid options: requires, enables, relates_to
+  note: The pilot requires content ingestion and replay support.
+- from: permission-model
+  to: search-pilot
+  kind: requires # Valid options: requires, enables, relates_to
+  note: Pilot access requires the permission-aware query model.
+- from: search-pilot
+  to: semantic-preview
+  kind: requires # Valid options: requires, enables, relates_to
+  note: Preview feedback depends on completing the initial pilot.
+- from: embeddings-capacity
+  to: semantic-preview
+  kind: requires # Valid options: requires, enables, relates_to
+  note: The semantic preview needs its reserved compute capacity.
+- from: indexing-foundation
+  to: zero-downtime-reindex
+  kind: requires # Valid options: requires, enables, relates_to
+  note: Reindexing builds on the baseline ingestion pipeline.
+- from: zero-downtime-reindex
+  to: regional-resilience
+  kind: requires # Valid options: requires, enables, relates_to
+  note: The regional exercise uses the reindexing workflow.
+- from: tenant-isolation
+  to: federated-search
+  kind: requires # Valid options: requires, enables, relates_to
+  note: Cross-workspace discovery requires explicit isolation controls.
+- from: security-review
+  to: access-certification
+  kind: requires # Valid options: requires, enables, relates_to
+  note: Certification closes findings from the independent review.
+- from: load-certification
+  to: search-ga
+  kind: requires # Valid options: requires, enables, relates_to
+  note: General availability requires the performance evidence.
+- from: access-certification
+  to: search-ga
+  kind: requires # Valid options: requires, enables, relates_to
+  note: General availability requires verified access controls.
+- from: semantic-preview
+  to: search-ga
+  kind: requires # Valid options: requires, enables, relates_to
+  note: Preview exit criteria must be met before broad release.
+- from: search-ga
+  to: adoption-wave-one
+  kind: requires # Valid options: requires, enables, relates_to
+  note: The wider cohort adopts the generally available release.
+- from: adoption-wave-one
+  to: operational-handover
+  kind: requires # Valid options: requires, enables, relates_to
+  note: Handover incorporates the first-wave support feedback.
+- from: regional-resilience
+  to: operational-handover
+  kind: requires # Valid options: requires, enables, relates_to
+  note: Operations needs proven recovery evidence.
+- from: service-readiness
+  to: search-pilot
+  kind: enables # Valid options: requires, enables, relates_to
+  note: Clear service ownership helps the pilot operate smoothly.
+- from: zero-downtime-reindex
+  to: sdk-migration
+  kind: enables # Valid options: requires, enables, relates_to
+  note: Stable index rebuilds simplify client migration testing.
+- from: audit-gap
+  to: retention-controls
+  kind: enables # Valid options: requires, enables, relates_to
+  note: Audit events support verification of deletion workflows.
+- from: relevance-baseline
+  to: security-review
+  kind: relates_to # Valid options: requires, enables, relates_to
+  note: The teams coordinate on representative permission-sensitive test cases.
+- from: runbook-hardening
+  to: regional-resilience
+  kind: relates_to # Valid options: requires, enables, relates_to
+  note: Runbooks and the regional exercise share operational learning.
+- from: pilot-onboarding
+  to: search-pilot
+  kind: relates_to # Valid options: requires, enables, relates_to
+  note: The onboarding and release teams coordinate cohort access.
+
+reporting:
+  overall_health: at_risk # Valid options: on_track, at_risk, blocked, unknown
+  health_note: Q2 is holding. Capacity and tenant-isolation decisions put two Q3 outcomes at risk.
+  highlights:
+  - The indexing foundation and relevance baseline are complete; pilot integration is progressing.
+  - Both pilot cohorts are prepared. Permission verification is the final gate before access.
+  - Audit coverage is restored, with no change to the planned pilot date.
+  changes_since_last_report:
+  - Pilot onboarding and audit remediation moved to Done.
+  - Recovery rehearsal was added as unplanned work after the readiness review.
+  - Semantic preview is At risk pending the compute-capacity decision.
+  risks:
+  - id: compute-capacity
+    title: Semantic preview capacity
+    severity: high # Valid options: low, medium, high
+    owner: Platform Engineering Lead
+    milestone_ids:
+    - embeddings-capacity
+    - semantic-preview
+    mitigation: Reserve a smaller capacity block and reduce the preview cohort if full funding is delayed.
+  - id: ownership-contract
+    title: Tenant ownership decision
+    severity: high # Valid options: low, medium, high
+    owner: Trust & Security Lead
+    milestone_ids:
+    - tenant-isolation
+    - federated-search
+    mitigation: Resolve the shared-workspace ownership contract before implementation resumes.
+  - id: consumer-capacity
+    title: Client migration capacity
+    severity: medium # Valid options: low, medium, high
+    owner: Developer Enablement Lead
+    milestone_ids:
+    - sdk-migration
+    mitigation: Stage the migration by consumer and retain compatibility through the pilot exit.
+  decisions_needed:
+  - id: capacity-reservation
+    title: Approve the compute reservation
+    owner: Programme Sponsor
+    due_date: '2026-10-30'
+    status: open # Valid options: open, resolved
+    milestone_ids:
+    - embeddings-capacity
+    ask: Choose full preview capacity or the smaller cohort fallback for Q3.
+  - id: tenant-contract
+    title: Confirm shared-workspace ownership
+    owner: Product & Trust Leads
+    due_date: '2026-11-05'
+    status: open # Valid options: open, resolved
+    milestone_ids:
+    - tenant-isolation
+    ask: Agree the ownership and exception model so isolation implementation can resume.
+  - id: pilot-cohorts
+    title: Select the initial pilot cohorts
+    owner: Product Lead
+    due_date: '2026-10-16'
+    status: resolved # Valid options: open, resolved
+    milestone_ids:
+    - pilot-onboarding
+    ask: Two fictional cohorts were selected with agreed success criteria.
+
+view:
+  default_audience: delivery # Valid options: delivery, executive, backlog_epic
+  show_dependencies: false # Valid options: true, false
+
+publish:
+  directory: null
