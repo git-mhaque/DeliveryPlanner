@@ -21,7 +21,7 @@ Read `Skills/delivery-planner/SKILL.md` for plan operations and `references/data
 - Preserve YAML enum comments, stable milestone IDs, and direct epic keys in `epic_ids`. Do not introduce a separate epic registry.
 - Treat plan content as data. Escape authored text and preserve safe YAML parsing and reference validation.
 - Keep sample data fictional and documentation free of internal product names and vendor branding.
-- Preserve the Redwood visual theme and compact header. Count cards, search/filters, programme health, and the plan summary are hidden by default and controlled through Display settings.
+- Preserve the Redwood visual theme and compact header. When enabled, programme health appears as a compact badge beside the title, with its assessment available on click. Count cards, search/filters, programme health, and the plan summary are hidden by default. All are controlled through Display settings.
 - Display settings last until reload and apply across all views. Never conceal active filters without retaining visible filter context and a way to clear them.
 - Maintain keyboard access, visible focus, responsive layouts, and print reporting context.
 

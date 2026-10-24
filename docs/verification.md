@@ -58,13 +58,14 @@ Inspected the generated HTML through a localhost-only server in the Codex browse
 - Keyboard arrow navigation switches tabs. Native controls and modal focus handling are available.
 - Desktop and 390-pixel viewport checks showed no page-wide horizontal overflow. The narrow roadmap scrolls within its own container.
 - Redwood styling uses warm neutrals, a compact title, underlined tabs, and consistent status badges. Print / PDF and the settings icon sit at the top-right beside the title; the reporting date remains beside view navigation. The dark banner and office branding have been removed.
-- Count cards, search/filters, programme health, the summary, and the inactive result strip are hidden on initial load. The desktop roadmap begins about 138 pixels from the top at a 1440-pixel viewport width.
-- Display settings independently enables all four optional panels across the three views. Hide all restores the compact layout. Close, Done, and Escape dismiss the overlay and restore focus to its trigger. Reload resets the settings.
+- Programme health, count cards, search/filters, the summary, and the inactive result strip are hidden on initial load. When enabled, programme health appears beside the title as a 32-pixel-high badge. The desktop roadmap begins about 138 pixels from the top at a 1440-pixel viewport width.
+- Display settings independently enables all four optional panels across the three views. Hide all hides every optional element, including health. Close, Done, and Escape dismiss the overlay and restore focus to its trigger. Reload resets all four settings to unchecked and hides the health badge.
 - Hiding the controls with PLAT-201 selected preserves the one-epic, three-milestone result and its visible Clear filters action. Clearing restores all 22 groups (21 epic groups plus unlinked milestones) and hides the inactive result strip.
 - Dependency display still renders 21 valid relationships after enabling count cards. Selecting and clearing a milestone correctly shows and hides the selection summary.
 - Delivery and Executive roadmaps start directly with period headings. Show dependencies and Clear selection are outside the board beside the view controls. Dependency state survives view switches; roadmap controls are hidden in Backlog Epic View. Clearing a selection returns focus to Show dependencies.
 - The compact toolbar and settings overlay were inspected at a 390-pixel viewport width. The dialog fits inside the viewport and the page has no horizontal overflow.
-- Print / PDF and Settings align at the top-right on desktop. At 390 pixels they sit above the title without overlap; programme health and summary can still be enabled, and dismissing settings returns focus to its relocated button.
+- Print / PDF and Settings align at the top-right on desktop. At 390 pixels they sit above the title without overlap; the health badge wraps below the title, and dismissing settings returns focus to its relocated button.
+- Clicking programme health opens its full assessment. Close and Escape dismiss the dialog, and Escape returns focus to the badge. At 390 pixels the assessment dialog fits inside the viewport (337 pixels wide), with no page-wide horizontal overflow. Dependency lines still render after the header change.
 - No JavaScript errors were reported during the inspected interactions.
 
 ## Remaining manual browser checks

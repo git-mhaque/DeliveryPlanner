@@ -331,7 +331,7 @@ Maintain these styles in the shared renderer templates, so every generated plan 
 ### Shared behavior
 
 - Show plan title, reporting date, and view navigation.
-- Provide an accessible Display settings overlay with independent toggles for count cards, search and filters, programme health, and the plan summary. All four are hidden by default, including before JavaScript initializes. Provide Hide all, close, and Escape actions, and restore focus to the settings button on dismissal.
+- Provide an accessible Display settings overlay with independent toggles for count cards, search and filters, programme health, and the plan summary. When enabled, programme health is shown as a compact badge beside the title, wrapping below it on narrow screens. Clicking the badge opens an accessible assessment dialog; close and Escape restore focus to the badge. Missing health remains “Not provided”; no status is inferred. All four options are unchecked and hidden by default, including before JavaScript initializes. Provide Hide all, close, and Escape actions, and restore focus to the settings button on dismissal.
 - Apply display settings across all three views for the current page session. Reloading returns to the compact defaults. Settings do not change YAML, delivery data, or the generated artifact.
 - Hiding search/filter controls preserves active filters. Retain a visible result summary and Clear filters action whenever filters are active; retain selection context while a milestone is selected. Otherwise hide the result strip when filter controls are hidden.
 - Optional panels remain hidden in print unless enabled. Keep the reporting date and any active filter context in printed output. Executive risks, decisions, and exception reporting remain core view content.

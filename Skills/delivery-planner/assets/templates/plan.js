@@ -202,8 +202,13 @@
   function initialize() {
     $('report-date').textContent=plan.plan.as_of?dateLabel(plan.plan.as_of):'Draft';
     const health=plan.reporting.overall_health || 'unknown';
-    $('health-card').className=`health-card health-${health}`;
-    $('health-card').innerHTML=`<div class="health-caption">PROGRAMME HEALTH</div><div class="health-title">${plan.reporting.overall_health ? badge(health) : '<span class="badge status-unknown">Not provided</span>'}</div><p>${escape(plan.reporting.health_note||'Health commentary not provided.')}</p>`;
+    const healthStatus=plan.reporting.overall_health ? badge(health) : '<span class="badge status-unknown">Not provided</span>';
+    $('health-status').innerHTML=healthStatus;
+    $('health-detail-status').innerHTML=healthStatus;
+    $('health-note').textContent=plan.reporting.health_note||'Health commentary not provided.';
+    $('health-button').addEventListener('click',()=>{$('health-dialog').showModal();$('health-button').setAttribute('aria-expanded','true');});
+    $('close-health').addEventListener('click',()=>$('health-dialog').close());
+    $('health-dialog').addEventListener('close',()=>{$('health-button').setAttribute('aria-expanded','false');$('health-button').focus({preventScroll:true});});
     const uniqueEpics=epicKeys.length,done=count(plan.milestones,'done'),attention=count(plan.milestones,'at_risk')+count(plan.milestones,'blocked');
     const metric=(value,label,note,colour='')=>`<div class="metric"><div class="metric-number ${colour}">${String(value).padStart(2,'0')}</div><div><div class="metric-label">${label}</div><div class="metric-note">${note}</div></div></div>`;
     $('metrics').innerHTML=metric(plan.milestones.length,'Delivery milestones',`${plan.streams.length} streams · ${plan.milestones.filter(m=>m.tag==='unplanned').length} unplanned`) + metric(done,'Outcomes delivered','Milestones marked Done','teal') + metric(attention,'Need attention',`${count(plan.milestones,'at_risk')} at risk · ${count(plan.milestones,'blocked')} blocked`,'amber') + metric(uniqueEpics,'Connected epics',`${plan.teams.length} teams · Full plan totals`);
