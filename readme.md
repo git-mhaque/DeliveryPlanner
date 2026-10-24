@@ -2,7 +2,7 @@
 
 **Turn complex, multi-team delivery plans into a shared visual story.**
 
-DeliveryPlanner is an AI skill backed by a deterministic Python engine. It transforms one YAML data file into a portable, interactive HTML roadmap that helps delivery teams coordinate work and helps senior stakeholders understand progress, dependencies, risks, and decisions.
+DeliveryPlanner helps you build and maintain a delivery plan with an AI assistant, then share it as an interactive roadmap that opens in a browser. Teams can coordinate work, while senior stakeholders can understand progress, dependencies, risks, and decisions from the same plan.
 
 ## 🎯 The problem it solves
 
@@ -23,6 +23,40 @@ DeliveryPlanner brings that context together in one maintained plan, with differ
 ![North Star Platform Delivery Plan](docs/previews/north-star-delivery.jpg)
 
 *North Star Platform Delivery Plan is a fictional public example with 32 milestones, four streams, six teams, and five quarters. It is also the maintained development fixture.*
+
+## 🚀 Start here — no terminal needed
+
+### Just want to explore the example?
+
+1. **[Download DeliveryPlanner](https://github.com/git-mhaque/DeliveryPlanner/archive/refs/heads/main.zip)** and unzip it.
+2. Open **Plans → north-star-platform**.
+3. Double-click **delivery_plan.html** to open it in your browser.
+
+That's it. The example is already generated. You do not need Python, an AI assistant, or a server to explore it.
+
+### Want to create your own plan?
+
+1. Download and unzip the project using the link above.
+2. Open the extracted **DeliveryPlanner** folder in an AI coding assistant that can read local files and run commands.
+3. Copy this request into the assistant:
+
+> Read AGENTS.md and Skills/delivery-planner/SKILL.md in this project. Help me set up DeliveryPlanner, including any missing tools and its required environment. Then help me create a new delivery plan. Ask me for the plan name, time periods, teams, streams, and initial milestones. Use the bundled skill to create, validate, and generate the plan, then show me delivery_plan.html.
+
+Creating and updating plans needs a one-time setup on your computer. The request above asks your assistant to handle the technical steps; it may ask you to approve installing missing tools.
+
+After that, describe changes in everyday language:
+
+> Add a Platform stream and a milestone called “Pilot ready” in Q3. Mark it On track.
+>
+> Move “Pilot ready” to Q4 and explain the change in its update note.
+>
+> Check the plan for issues and refresh the roadmap.
+
+Your assistant maintains the plan's data file and regenerates the HTML. You can edit the data file yourself if you prefer.
+
+### Want to share it?
+
+Send the generated **delivery_plan.html** through your usual approved sharing channel. Recipients download it and open it in their browser—no DeliveryPlanner installation is needed. The file is a snapshot; share a newly generated copy when the plan changes.
 
 ## 👥 One plan, three perspectives
 
@@ -45,23 +79,24 @@ The AI agent helps you maintain the plan and invoke the appropriate operation. V
 | **Update** | Validate the YAML and regenerate `delivery_plan.html`. |
 | **Publish** | Regenerate and copy the HTML to a designated local or mounted folder. |
 
-The skill instructions are in [SKILL.md](Skills/delivery-planner/SKILL.md). This repository also includes a `.agents/skills/delivery-planner` discovery link to the canonical skill directory.
-
-Example requests to an agent using the skill:
-
-> Create a delivery plan called Customer Experience Platform.
->
-> Validate the North Star Platform plan and explain any warnings.
->
-> Update the North Star HTML from its YAML data file.
->
-> Publish the North Star plan to the folder I specify.
+The assistant follows the instructions in [SKILL.md](Skills/delivery-planner/SKILL.md).
 
 Tracker keys are references, not live integrations. DeliveryPlanner does not fetch tracker status, infer executive commentary, or send stakeholder messages. Publish copies an artifact; it does not deploy a website.
 
-## 🚀 Quick start
+## ⌨️ Exploring a plan
 
-Prerequisites: Python 3.9 or later and `uv` for the pinned environment. Node.js is used for the JavaScript development checks.
+- Click empty roadmap space, then use **← ↑ ↓ →** to scroll across quarters and streams.
+- Use **Tab** to move between milestones and **Enter** to open details.
+- Select a milestone to highlight its direct connections. Press **Esc** or click outside cards to clear selection.
+- Open **Settings** to show counts, filters, programme health, the summary, or dependency lines. **Show all** and **Hide all** toggle them together.
+- Dependency lines are enabled by default in new plans. Other optional panels start hidden; display preferences reset on reload.
+
+## 🔧 Optional technical setup
+
+<details>
+<summary>Show command-line setup and usage</summary>
+
+For people who prefer running commands directly: install Python 3.9 or later and `uv`. Node.js is only needed for JavaScript development checks.
 
 ```sh
 git clone https://github.com/git-mhaque/DeliveryPlanner.git
@@ -96,15 +131,12 @@ Publish to a folder you choose:
 Skills/delivery-planner/.venv/bin/python Skills/delivery-planner/scripts/delivery_planner.py --root "$PWD" publish north-star-platform --to /path/to/published-plans
 ```
 
-## ⌨️ Exploring a plan
+</details>
 
-- Click empty roadmap space, then use **← ↑ ↓ →** to scroll across quarters and streams.
-- Use **Tab** to move between milestones and **Enter** to open details.
-- Select a milestone to highlight its direct connections. Press **Esc** or click outside cards to clear selection.
-- Open **Settings** to show counts, filters, programme health, the summary, or dependency lines. **Show all** and **Hide all** toggle them together.
-- Dependency lines are enabled by default in new plans. Other optional panels start hidden; display preferences reset on reload.
+<details>
+<summary>Show repository structure and development checks</summary>
 
-## 📁 Repository layout
+### Repository layout
 
 ```text
 DeliveryPlanner/
@@ -124,7 +156,7 @@ DeliveryPlanner/
 └── AGENTS.md                         # Contributor instructions
 ```
 
-## 🛠️ Development and verification
+### Development and verification
 
 Edit shared templates rather than generated HTML, then regenerate the maintained plan.
 
@@ -136,5 +168,7 @@ node --check Skills/delivery-planner/assets/templates/graph-layout.js
 ```
 
 The current suite includes 43 engine tests and five graph geometry tests. Browser checks cover the interactive views, filtering, selection, and responsive layouts. Actual PDF pagination and broader browser compatibility remain manual checks. Zoom and drag-to-edit are not implemented.
+
+</details>
 
 Read the [data model](Skills/delivery-planner/references/data-model.md), [implementation specification](docs/delivery-planner-spec.md), [verification notes](docs/verification.md), and [contributor instructions](AGENTS.md) for more detail.
