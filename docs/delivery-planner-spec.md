@@ -347,6 +347,7 @@ Maintain these styles in the shared renderer templates, so every generated plan 
 ### Delivery View
 
 - Display all streams across all periods, including empty cells.
+- Start the board directly with period headings. Keep Show dependencies and Clear selection with the page's view controls, outside the board, without a separate roadmap title/subtitle bar. Hide roadmap controls in Backlog Epic View and when no roadmap can be rendered.
 - Show milestone title, status, planned/unplanned tag, owner team, and related epic keys on cards or in accessible details depending on available space.
 - Offer filters for stream, owner/contributing team, status, tag, and epic.
 - Show outcome, notes, exact target date when present, ownership, epics, and incoming/outgoing relationships in card details.

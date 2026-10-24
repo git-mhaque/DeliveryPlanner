@@ -66,7 +66,7 @@
     }).join('');
     const visible = new Set(items.map(m => m.id));
     const printLinks = plan.dependencies.filter(e => visible.has(e.from) || visible.has(e.to));
-    return `<section class="board-section"><div class="section-toolbar"><div><h2 class="section-title">${executive ? 'Strategic milestones' : 'Delivery roadmap'}</h2><p class="section-subtitle">${executive ? 'Selected outcomes for stakeholder review' : 'Outcomes by stream and target period · Select a card to explore'}</p></div><div class="board-actions"><button class="button selection-clear" id="clear-selection" type="button" ${state.selected ? '' : 'hidden'}>Clear selection</button><label class="toggle"><input id="show-dependencies" type="checkbox" ${state.showDeps ? 'checked' : ''}> Show dependencies</label></div></div>
+    return `<section class="board-section" aria-label="${executive ? 'Strategic milestones' : 'Delivery roadmap'}">
       <div class="board-scroll" id="board-scroll" role="region" aria-label="Roadmap timeline" tabindex="0"><div class="roadmap" id="roadmap" style="--cols:${plan.periods.length}"><div class="board-head"><div class="board-head-cell">WORK STREAM</div>${heads}</div>${rows}<svg class="dependency-layer" id="dependency-layer" aria-hidden="true"></svg></div></div>
       ${statusLegend()}<div class="print-dependencies"><strong>Dependencies (including linked milestones outside this view)</strong>${printLinks.map(e => `<div>${escape(byId[e.from].title)} ${e.kind === 'relates_to' ? '↔' : '→'} ${escape(byId[e.to].title)} · ${escape(kinds[e.kind])}</div>`).join('')}</div></section>`;
   }
@@ -121,8 +121,9 @@
     if ($('clear-active-filters')) $('clear-active-filters').addEventListener('click',()=>{resetFilters();render();$('view-content').focus({preventScroll:true});});
     const draft = !plan.plan.as_of || !plan.periods.length || !plan.streams.length || !plan.milestones.length;
     $('view-content').innerHTML = (draft ? '<div class="draft-banner"><strong>Draft plan</strong> · Complete the reporting date, periods, streams, and milestones before publishing.</div>' : '') + (state.view === 'executive' ? executive(items) : state.view === 'backlog_epic' ? epicView(items) : board(items));
-    if ($('show-dependencies')) $('show-dependencies').addEventListener('change',event => {state.showDeps=event.target.checked;requestDraw();});
-    if ($('clear-selection')) $('clear-selection').addEventListener('click',()=>{state.selected=null;render();});
+    $('roadmap-controls').hidden=!$('roadmap');
+    $('show-dependencies').checked=state.showDeps;
+    $('clear-selection').hidden=!state.selected;
     if ($('expand-epics')) $('expand-epics').addEventListener('click',event=>{
       const details=[...document.querySelectorAll('.epic-group')];const expand=details.some(d=>!d.open);details.forEach(d=>d.open=expand);event.target.textContent=expand?'Collapse all':'Expand all';
     });
@@ -211,6 +212,8 @@
     addOptions('filter-period',plan.periods.map(p=>[p.id,p.label]));addOptions('filter-epic',epicKeys.map(key=>[key,key]));
     Object.keys(filters).forEach(key=>$(`filter-${key}`).addEventListener(key==='search'?'input':'change',event=>{filters[key]=event.target.value;render();}));
     $('reset-filters').addEventListener('click',()=>{resetFilters();render();});
+    $('show-dependencies').addEventListener('change',event=>{state.showDeps=event.target.checked;requestDraw();});
+    $('clear-selection').addEventListener('click',()=>{state.selected=null;render();$('show-dependencies').focus({preventScroll:true});});
     $('settings-button').addEventListener('click',()=>{$('settings-dialog').showModal();$('settings-button').setAttribute('aria-expanded','true');});
     for (const key of Object.keys(display)) $(`display-${key}`).addEventListener('change',event=>{display[key]=event.target.checked;applyDisplay();});
     $('hide-all-panels').addEventListener('click',()=>{Object.keys(display).forEach(key=>display[key]=false);applyDisplay();});

@@ -62,6 +62,7 @@ Inspected the generated HTML through a localhost-only server in the Codex browse
 - Display settings independently enables all four optional panels across the three views. Hide all restores the compact layout. Close, Done, and Escape dismiss the overlay and restore focus to its trigger. Reload resets the settings.
 - Hiding the controls with PLAT-201 selected preserves the one-epic, three-milestone result and its visible Clear filters action. Clearing restores all 22 groups (21 epic groups plus unlinked milestones) and hides the inactive result strip.
 - Dependency display still renders 21 valid relationships after enabling count cards. Selecting and clearing a milestone correctly shows and hides the selection summary.
+- Delivery and Executive roadmaps start directly with period headings. Show dependencies and Clear selection are outside the board beside the view controls. Dependency state survives view switches; roadmap controls are hidden in Backlog Epic View. Clearing a selection returns focus to Show dependencies.
 - The compact toolbar and settings overlay were inspected at a 390-pixel viewport width. The dialog fits inside the viewport and the page has no horizontal overflow.
 - No JavaScript errors were reported during the inspected interactions.
 

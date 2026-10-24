@@ -60,10 +60,8 @@ h1{font-size:clamp(25px,2.2vw,32px);line-height:1.25;letter-spacing:-.7px;margin
 .filter-summary{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted);line-height:1.6;padding:13px 2px 15px;min-height:44px;gap:12px}
 .filter-summary strong{color:var(--ink);font-weight:650}
 .board-section{background:white;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.section-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:17px 20px;border-bottom:1px solid var(--line)}
 .section-title{margin:0;font-size:14px;font-weight:700}
-.section-subtitle{color:var(--muted);font-size:11px;margin:5px 0 0}
-.board-actions{display:flex;align-items:center;gap:15px}
+.roadmap-controls{display:flex;align-items:center;gap:10px;margin-right:8px}
 .toggle{font-size:11px;display:flex;gap:8px;align-items:center;white-space:nowrap}
 .toggle input{accent-color:var(--teal);width:15px;height:15px;margin:0}
 .selection-clear{font-size:10px;padding:5px 8px}
@@ -181,7 +179,7 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 
 .view-tabs button:hover{background:#ece9e6}
 
-.utility-actions{display:flex;align-items:center;gap:10px;margin-left:auto}
+.utility-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-left:auto}
 .reporting-date{font-size:11px;color:var(--muted);white-space:nowrap}
 .reporting-date time{color:var(--ink);font-weight:600;margin-left:3px}
 .compact-button{padding:7px 10px;font-size:11px;border-radius:5px}
@@ -232,6 +230,7 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .metric-label{font-size:10px}
 .metric-note{font-size:9px}
 .utility-actions{width:100%;order:-1;justify-content:flex-end}
+.roadmap-controls{order:1;flex-basis:100%;justify-content:flex-end;margin-right:0}
 .reporting-date{margin-right:auto}
 .view-tabs{width:100%}
 .view-tabs button{flex:1;padding:10px 6px;font-size:11px;gap:4px}
@@ -239,8 +238,6 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .filters .search-filter{flex-basis:100%}
 .filters label{flex-basis:calc(33% - 12px);min-width:85px}
 .filter-summary{font-size:10px;flex-wrap:wrap}
-.section-toolbar{padding:14px;align-items:flex-start}
-.board-actions{flex-direction:column;align-items:flex-end;gap:8px}
 .section-title{font-size:13px}
 .toggle{font-size:10px}
 .exec-grid{grid-template-columns:1fr}
@@ -268,7 +265,7 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 @media print{.utility-actions{order:0;width:auto}
 body{background:white;color:#312d2a;font-size:10px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
 .workspace{padding:16px 0;max-width:none}
-.skip-link,.utility-actions button,.filters,.board-actions,.reset-button,.diagnostics,dialog{display:none!important}
+.skip-link,.utility-actions button,.filters,.roadmap-controls,.reset-button,.diagnostics,dialog{display:none!important}
 .hero{margin-bottom:15px;gap:25px}
 h1{font-size:28px}
 .health-card{flex-basis:230px}
@@ -295,7 +292,6 @@ h1{font-size:28px}
 .milestone-bottom{padding-top:6px}
 .board-section{overflow:visible}
 .lane-row{break-inside:avoid}
-.section-toolbar{padding:12px}
 .legend{padding:10px;font-size:8px}
 .exec-grid{grid-template-columns:1.15fr 1fr 1fr;gap:12px}
 .exec-grid .report-card:first-child{grid-column:auto}
@@ -333,6 +329,10 @@ h1{font-size:28px}
         <button type="button" id="tab-backlog_epic" role="tab" data-view="backlog_epic" aria-controls="view-content">☷ <span>Backlog Epic View</span></button>
       </nav>
       <div class="utility-actions">
+        <div class="roadmap-controls" id="roadmap-controls" hidden>
+          <button class="button selection-clear" id="clear-selection" type="button" hidden>Clear selection</button>
+          <label class="toggle"><input id="show-dependencies" type="checkbox"> Show dependencies</label>
+        </div>
         <span class="reporting-date">As of <time id="report-date" datetime="2026-10-24">2026-10-24</time></span>
         <button class="button compact-button" id="print-button" type="button"><span aria-hidden="true">↗</span> Print / PDF</button>
         <button class="button icon-button" id="settings-button" type="button" aria-label="Display settings" title="Display settings" aria-haspopup="dialog" aria-controls="settings-dialog" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 3-.6 2.4-2 .9-2.2-.7-2 3.4L4 10.7v2.6l-1.8 1.7 2 3.4 2.2-.7 2 .9L9 21h6l.6-2.4 2-.9 2.2.7 2-3.4-1.8-1.7v-2.6L21.8 9l-2-3.4-2.2.7-2-.9L15 3Z"/><circle cx="12" cy="12" r="3"/></svg></button>
@@ -435,7 +435,7 @@ h1{font-size:28px}
     }).join('');
     const visible = new Set(items.map(m => m.id));
     const printLinks = plan.dependencies.filter(e => visible.has(e.from) || visible.has(e.to));
-    return `<section class="board-section"><div class="section-toolbar"><div><h2 class="section-title">${executive ? 'Strategic milestones' : 'Delivery roadmap'}</h2><p class="section-subtitle">${executive ? 'Selected outcomes for stakeholder review' : 'Outcomes by stream and target period · Select a card to explore'}</p></div><div class="board-actions"><button class="button selection-clear" id="clear-selection" type="button" ${state.selected ? '' : 'hidden'}>Clear selection</button><label class="toggle"><input id="show-dependencies" type="checkbox" ${state.showDeps ? 'checked' : ''}> Show dependencies</label></div></div>
+    return `<section class="board-section" aria-label="${executive ? 'Strategic milestones' : 'Delivery roadmap'}">
       <div class="board-scroll" id="board-scroll" role="region" aria-label="Roadmap timeline" tabindex="0"><div class="roadmap" id="roadmap" style="--cols:${plan.periods.length}"><div class="board-head"><div class="board-head-cell">WORK STREAM</div>${heads}</div>${rows}<svg class="dependency-layer" id="dependency-layer" aria-hidden="true"></svg></div></div>
       ${statusLegend()}<div class="print-dependencies"><strong>Dependencies (including linked milestones outside this view)</strong>${printLinks.map(e => `<div>${escape(byId[e.from].title)} ${e.kind === 'relates_to' ? '↔' : '→'} ${escape(byId[e.to].title)} · ${escape(kinds[e.kind])}</div>`).join('')}</div></section>`;
   }
@@ -490,8 +490,9 @@ h1{font-size:28px}
     if ($('clear-active-filters')) $('clear-active-filters').addEventListener('click',()=>{resetFilters();render();$('view-content').focus({preventScroll:true});});
     const draft = !plan.plan.as_of || !plan.periods.length || !plan.streams.length || !plan.milestones.length;
     $('view-content').innerHTML = (draft ? '<div class="draft-banner"><strong>Draft plan</strong> · Complete the reporting date, periods, streams, and milestones before publishing.</div>' : '') + (state.view === 'executive' ? executive(items) : state.view === 'backlog_epic' ? epicView(items) : board(items));
-    if ($('show-dependencies')) $('show-dependencies').addEventListener('change',event => {state.showDeps=event.target.checked;requestDraw();});
-    if ($('clear-selection')) $('clear-selection').addEventListener('click',()=>{state.selected=null;render();});
+    $('roadmap-controls').hidden=!$('roadmap');
+    $('show-dependencies').checked=state.showDeps;
+    $('clear-selection').hidden=!state.selected;
     if ($('expand-epics')) $('expand-epics').addEventListener('click',event=>{
       const details=[...document.querySelectorAll('.epic-group')];const expand=details.some(d=>!d.open);details.forEach(d=>d.open=expand);event.target.textContent=expand?'Collapse all':'Expand all';
     });
@@ -580,6 +581,8 @@ h1{font-size:28px}
     addOptions('filter-period',plan.periods.map(p=>[p.id,p.label]));addOptions('filter-epic',epicKeys.map(key=>[key,key]));
     Object.keys(filters).forEach(key=>$(`filter-${key}`).addEventListener(key==='search'?'input':'change',event=>{filters[key]=event.target.value;render();}));
     $('reset-filters').addEventListener('click',()=>{resetFilters();render();});
+    $('show-dependencies').addEventListener('change',event=>{state.showDeps=event.target.checked;requestDraw();});
+    $('clear-selection').addEventListener('click',()=>{state.selected=null;render();$('show-dependencies').focus({preventScroll:true});});
     $('settings-button').addEventListener('click',()=>{$('settings-dialog').showModal();$('settings-button').setAttribute('aria-expanded','true');});
     for (const key of Object.keys(display)) $(`display-${key}`).addEventListener('change',event=>{display[key]=event.target.checked;applyDisplay();});
     $('hide-all-panels').addEventListener('click',()=>{Object.keys(display).forEach(key=>display[key]=false);applyDisplay();});
