@@ -20,43 +20,35 @@ a{color:var(--teal)}
 [hidden]{display:none!important}
 .skip-link{position:absolute;top:-80px;left:20px;z-index:100;background:white;padding:12px}
 .skip-link:focus{top:8px}
-.topbar{height:76px;background:var(--ink);color:#fbf9f8;border-bottom:3px solid #bda37f;display:flex;align-items:center;justify-content:space-between;padding:0 44px;gap:20px}
-.wordmark{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:780;letter-spacing:2px;white-space:nowrap}
-.brand-icon{font-size:34px;color:#dec8a7;font-weight:400}
-.topbar-right{display:flex;align-items:center;gap:18px;font-size:12px}
-.snapshot-label{font-size:9px;letter-spacing:1.6px;color:#d4cfca;font-weight:700}
 .button{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:white;border-radius:8px;padding:9px 13px;font-size:12px;font-weight:600;line-height:1.3;white-space:nowrap}
 .button:hover{background:#f1efed;border-color:#9e9892}
 .button.subtle{background:#fbf9f8}
 .button.primary{background:var(--primary);color:white;border-color:var(--primary)}
-.workspace{max-width:1800px;margin:auto;padding:38px 44px 24px}
-.hero{display:flex;align-items:center;justify-content:space-between;gap:40px;margin-bottom:30px}
-.hero-copy{max-width:920px}
+.workspace{max-width:1800px;margin:auto;padding:28px 32px 24px}
+.hero{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:16px}
+.hero-copy{flex:1;min-width:0}
 .eyebrow{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--muted)}
-.tiny-star{color:var(--teal);font-size:16px}
-.separator{color:#bcb6b1}
-h1{font-size:clamp(28px,3vw,42px);line-height:1.15;letter-spacing:-1px;margin:12px 0 10px;font-weight:650}
-.hero-summary{font-size:13px;color:var(--muted);line-height:1.8;margin:0;max-width:780px}
-.health-card{flex:0 0 260px;padding:17px 20px;border-left:3px solid #b58535;background:#fcf4e6;border-radius:0 6px 6px 0}
+h1{font-size:clamp(25px,2.2vw,32px);line-height:1.25;letter-spacing:-.7px;margin:0;font-weight:650;overflow-wrap:anywhere}
+.hero-summary{font-size:13px;color:var(--muted);line-height:1.65;margin:9px 0 0;max-width:900px}
+.health-card{flex:0 0 260px;padding:12px 16px;border-left:3px solid #b58535;background:#fcf4e6;border-radius:0 6px 6px 0}
 .health-card.health-on_track{border-color:var(--teal);background:var(--teal-bg)}
 .health-card.health-blocked{border-color:var(--red);background:var(--red-bg)}
 .health-card.health-unknown{border-color:#8b8580;background:#f1efed}
 .health-caption{font-size:9px;font-weight:750;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
 .health-title{font-size:15px;font-weight:700;display:flex;align-items:center;gap:7px}
 .health-card p{font-size:11px;line-height:1.6;margin:8px 0 0;color:#665f5b}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:var(--paper);border-radius:var(--radius);margin-bottom:28px;overflow:hidden}
-.metric{padding:18px 22px;border-right:1px solid var(--line);display:flex;align-items:center;gap:16px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:var(--paper);border-radius:var(--radius);margin-bottom:16px;overflow:hidden}
+.metric{padding:14px 20px;border-right:1px solid var(--line);display:flex;align-items:center;gap:16px}
 .metric:last-child{border:0}
 .metric-number{font-size:30px;font-weight:600;letter-spacing:-1px;font-variant-numeric:tabular-nums;line-height:1}
 .metric-label{font-size:11px;font-weight:650;margin-bottom:5px}
 .metric-note{font-size:10px;color:var(--muted);line-height:1.4}
 .metric-number.teal{color:var(--teal)}
 .metric-number.amber{color:var(--amber)}
-.navigation-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:21px}
+.navigation-row{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;margin-bottom:16px}
 .view-tabs{display:flex;gap:8px;border-bottom:1px solid #bcb6b1;padding:0}
-.view-tabs button{border:0;border-bottom:3px solid transparent;background:transparent;padding:13px 15px 12px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--muted)}
+.view-tabs button{border:0;border-bottom:3px solid transparent;background:transparent;padding:10px 12px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--muted)}
 .view-tabs button[aria-selected=true]{border-bottom-color:var(--primary);color:var(--ink);background:transparent}
-.navigation-note{font-size:11px;color:#6f6964}
 .filters{display:flex;align-items:end;gap:10px;flex-wrap:wrap;background:white;padding:14px 16px;border:1px solid var(--line);border-radius:8px}
 .filters label{display:flex;flex-direction:column;gap:6px;flex:1 1 110px;min-width:105px}
 .filters .search-filter{flex:1.5 1 180px}
@@ -187,11 +179,27 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .no-script{background:white;padding:24px}
 .no-script article{break-inside:avoid;border-top:1px solid var(--line);padding:14px 0}
 
-.topbar .button{background:transparent;color:#fbf9f8;border-color:#8b8580;border-radius:4px}
-
-.topbar .button:hover{background:#47423e;border-color:#d4cfca}
-
 .view-tabs button:hover{background:#ece9e6}
+
+.utility-actions{display:flex;align-items:center;gap:10px;margin-left:auto}
+.reporting-date{font-size:11px;color:var(--muted);white-space:nowrap}
+.reporting-date time{color:var(--ink);font-weight:600;margin-left:3px}
+.compact-button{padding:7px 10px;font-size:11px;border-radius:5px}
+.icon-button{width:34px;height:34px;padding:7px;border-radius:5px}
+.icon-button svg{flex:none}
+.filter-summary>span{min-width:0;overflow-wrap:anywhere}
+.filter-summary .text-button{margin-left:8px;white-space:nowrap}
+.settings-dialog{width:min(440px,calc(100vw - 30px))}
+.settings-head{position:relative;padding:22px 24px 16px;border-bottom:1px solid var(--line)}
+.settings-head h2{font-size:20px;line-height:1.3;margin:0 30px 6px 0;letter-spacing:-.3px}
+.settings-head p{font-size:12px;line-height:1.6;color:var(--muted);margin:0 25px 0 0}
+.settings-body{padding:0 24px 16px}
+.setting-row{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.setting-row strong{display:block;font-size:13px;font-weight:600}
+.setting-row small{display:block;font-size:11px;line-height:1.6;color:var(--muted);margin-top:5px}
+.setting-row input{width:18px;height:18px;margin:0;flex:none;accent-color:var(--primary);cursor:pointer}
+.settings-note{font-size:11px;line-height:1.7;color:var(--muted);margin:16px 0 0}
+.settings-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 24px;border-top:1px solid var(--line);background:#fbf9f8}
 
 @media(min-width:1600px){.milestone-title{font-size:13px}
 .milestone-outcome{font-size:11px}
@@ -201,10 +209,8 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 }
 
 @media(max-width:1150px){.workspace{padding:26px 24px}
-.topbar{padding:0 24px}
 .health-card{flex-basis:230px}
 .metric{padding:16px;gap:12px}
-.navigation-note{display:none}
 .exec-grid{grid-template-columns:1fr 1fr}
 .exec-grid .report-card:first-child{grid-column:1/-1}
 .epic-milestones{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -212,19 +218,11 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .filters .search-filter{flex-basis:220px}
 }
 
-@media(max-width:700px){.workspace{padding:22px 15px}
-.topbar{height:62px;padding:0 16px}
-.snapshot-label{display:none}
-.topbar-right{gap:8px}
-.topbar-right>span{font-size:10px}
-.topbar .button{font-size:0;padding:8px}
-.topbar .button span{font-size:15px}
-.wordmark{font-size:9px;letter-spacing:1px;gap:7px}
-.brand-icon{font-size:27px}
-.hero{display:block;margin-bottom:22px}
+@media(max-width:700px){.workspace{padding:20px 15px}
+.hero{display:block;margin-bottom:14px}
 .hero-summary{font-size:12px}
 .health-card{margin-top:18px;padding:12px 15px}
-.hero h1{font-size:30px;letter-spacing:-1px}
+.hero h1{font-size:25px;letter-spacing:-.5px}
 .eyebrow{font-size:8px;gap:6px;letter-spacing:1px}
 .metrics{grid-template-columns:1fr 1fr;margin-bottom:20px}
 .metric{border-bottom:1px solid var(--line)}
@@ -233,6 +231,8 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .metric-number{font-size:26px}
 .metric-label{font-size:10px}
 .metric-note{font-size:9px}
+.utility-actions{width:100%;order:-1;justify-content:flex-end}
+.reporting-date{margin-right:auto}
 .view-tabs{width:100%}
 .view-tabs button{flex:1;padding:10px 6px;font-size:11px;gap:4px}
 .filters{gap:9px;padding:12px}
@@ -265,13 +265,10 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 
 @page{size:A3 landscape;margin:12mm}
 
-@media print{.topbar{background:white;color:var(--ink);border-bottom:1px solid var(--line)}
-.topbar .brand-icon{color:var(--ink)}
-.snapshot-label{color:var(--muted)}
+@media print{.utility-actions{order:0;width:auto}
 body{background:white;color:#312d2a;font-size:10px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
-.topbar{height:auto;padding:0 0 12px}
 .workspace{padding:16px 0;max-width:none}
-.skip-link,.topbar .button,.filters,.navigation-note,.board-actions,.reset-button,.diagnostics,dialog{display:none!important}
+.skip-link,.utility-actions button,.filters,.board-actions,.reset-button,.diagnostics,dialog{display:none!important}
 .hero{margin-bottom:15px;gap:25px}
 h1{font-size:28px}
 .health-card{flex-basis:230px}
@@ -282,7 +279,7 @@ h1{font-size:28px}
 .navigation-row{margin-bottom:7px}
 .view-tabs{background:none;border:0;padding:0}
 .view-tabs button{display:none}
-.view-tabs button[aria-selected=true]{display:block;color:var(--ink);background:none;padding:0;box-shadow:none;font-size:15px}
+.view-tabs button[aria-selected=true]{display:block;color:var(--ink);background:none;padding:0;border:0;box-shadow:none;font-size:15px}
 .filter-summary{padding:5px 0 12px}
 .board-scroll{overflow:visible}
 .roadmap{min-width:0}
@@ -323,25 +320,25 @@ h1{font-size:28px}
 </head>
 <body>
   <a class="skip-link" href="#view-content">Skip to plan</a>
-  <header class="topbar">
-    <div class="wordmark"><span class="brand-icon" aria-hidden="true">✳</span><span>DELIVERY OFFICE</span></div>
-    <div class="topbar-right"><span class="snapshot-label">REPORTING SNAPSHOT</span><span id="report-date">2026-10-24</span><button class="button subtle" id="print-button" type="button"><span aria-hidden="true">↗</span> Print / PDF</button></div>
-  </header>
   <main class="workspace">
     <section class="hero" aria-labelledby="plan-title">
-      <div class="hero-copy"><div class="eyebrow"><span class="tiny-star" aria-hidden="true">✦</span> PROGRAMME ROADMAP <span class="separator">/</span> <span id="horizon-label"></span></div><h1 id="plan-title">North Star Platform Delivery Plan</h1><p class="hero-summary">A shared roadmap for better discovery, a resilient platform, and a confident rollout. Fictional public example.</p></div>
-      <div class="health-card" id="health-card"></div>
+      <div class="hero-copy"><h1 id="plan-title">North Star Platform Delivery Plan</h1><p class="hero-summary" id="plan-summary" hidden>A shared roadmap for better discovery, a resilient platform, and a confident rollout. Fictional public example.</p></div>
+      <div class="health-card" id="health-card" hidden></div>
     </section>
-    <section class="metrics" aria-label="Full plan milestone counts" id="metrics"></section>
+    <section class="metrics" aria-label="Full plan milestone counts" id="metrics" hidden></section>
     <div class="navigation-row">
       <nav class="view-tabs" role="tablist" aria-label="Plan views">
         <button type="button" id="tab-delivery" role="tab" data-view="delivery" aria-controls="view-content">▦ <span>Delivery View</span></button>
         <button type="button" id="tab-executive" role="tab" data-view="executive" aria-controls="view-content">◈ <span>Executive View</span></button>
         <button type="button" id="tab-backlog_epic" role="tab" data-view="backlog_epic" aria-controls="view-content">☷ <span>Backlog Epic View</span></button>
       </nav>
-      <span class="navigation-note">One plan. Three perspectives.</span>
+      <div class="utility-actions">
+        <span class="reporting-date">As of <time id="report-date" datetime="2026-10-24">2026-10-24</time></span>
+        <button class="button compact-button" id="print-button" type="button"><span aria-hidden="true">↗</span> Print / PDF</button>
+        <button class="button icon-button" id="settings-button" type="button" aria-label="Display settings" title="Display settings" aria-haspopup="dialog" aria-controls="settings-dialog" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 3-.6 2.4-2 .9-2.2-.7-2 3.4L4 10.7v2.6l-1.8 1.7 2 3.4 2.2-.7 2 .9L9 21h6l.6-2.4 2-.9 2.2.7 2-3.4-1.8-1.7v-2.6L21.8 9l-2-3.4-2.2.7-2-.9L15 3Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      </div>
     </div>
-    <form class="filters" id="filters" aria-label="Filter milestones" onsubmit="return false">
+    <form class="filters" id="filters" aria-label="Filter milestones" onsubmit="return false" hidden>
       <label class="search-filter"><span>SEARCH</span><input id="filter-search" type="search" placeholder="Milestone, outcome or epic…" autocomplete="off"></label>
       <label><span>STREAM</span><select id="filter-stream"><option value="">All streams</option></select></label>
       <label><span>TEAM</span><select id="filter-team"><option value="">All teams</option></select></label>
@@ -351,12 +348,23 @@ h1{font-size:28px}
       <label><span>EPIC</span><select id="filter-epic"><option value="">All epics</option></select></label>
       <button class="button reset-button" id="reset-filters" type="button">Reset</button>
     </form>
-    <div id="filter-summary" class="filter-summary" aria-live="polite"></div>
+    <div id="filter-summary" class="filter-summary" aria-live="polite" hidden></div>
     <section id="view-content" role="tabpanel" tabindex="-1"></section>
     <details id="diagnostics" class="diagnostics"></details>
     <footer class="page-footer"><span>DELIVERY PLANNER <span class="footer-divider">/</span> A shared view of what comes next.</span><span>Renderer 1.0.0 · Source 4f66ec2aa488</span></footer>
     <noscript><section class="no-script"><h2>Milestone register</h2><p>Enable JavaScript for filters, interactive views, and dependency exploration. All data is embedded in this file.</p><article><h3>Relevance baseline established</h3><p>done · q2-fy27 · features</p><p>A repeatable evaluation suite covers the 50 most common search journeys.</p><p>Epics: NS-101</p></article><article><h3>Unified search pilot</h3><p>on_track · q2-fy27 · features</p><p>Two pilot cohorts can search projects and documents from one entry point.</p><p>Epics: NS-101, NS-102</p></article><article><h3>Semantic search preview</h3><p>at_risk · q3-fy27 · features</p><p>Pilot users can find relevant content using natural-language queries.</p><p>Epics: NS-103, PLAT-203</p></article><article><h3>Saved searches &amp; alerts</h3><p>on_track · q3-fy27 · features</p><p>Users can save recurring searches and receive a daily change digest.</p><p>Epics: NS-104</p></article><article><h3>Cross-workspace discovery</h3><p>not_started · q4-fy27 · features</p><p>Authorized users can discover content across linked workspaces.</p><p>Epics: NS-105</p></article><article><h3>Search platform general availability</h3><p>not_started · q4-fy27 · features</p><p>Search is ready for broad adoption with performance and security evidence.</p><p>Epics: NS-103, NS-106</p></article><article><h3>Indexing foundation ready</h3><p>done · q2-fy27 · platform</p><p>A repeatable ingestion pipeline supports the first three content sources.</p><p>Epics: PLAT-201</p></article><article><h3>Index freshness recovery</h3><p>on_track · q2-fy27 · platform</p><p>Backlogged documents return to the agreed freshness window after bursts.</p><p>Epics: PLAT-202</p></article><article><h3>Embeddings capacity secured</h3><p>at_risk · q3-fy27 · platform</p><p>Reserved compute supports semantic preview traffic and evaluation runs.</p><p>Epics: PLAT-203</p></article><article><h3>Zero-downtime reindexing</h3><p>on_track · q3-fy27 · platform</p><p>Indexes can be rebuilt without interrupting active search sessions.</p><p>Epics: PLAT-201, PLAT-204</p></article><article><h3>Regional recovery verified</h3><p>not_started · q4-fy27 · platform</p><p>A regional failure can be recovered within the agreed recovery objective.</p><p>Epics: PLAT-205</p></article><article><h3>Scale &amp; latency certification</h3><p>not_started · q4-fy27 · platform</p><p>Peak traffic meets the latency budget with documented capacity headroom.</p><p>Epics: PLAT-201, PLAT-206</p></article><article><h3>Permission-aware query model</h3><p>on_track · q2-fy27 · security</p><p>Pilot results respect document and project access permissions.</p><p>Epics: SEC-301</p></article><article><h3>Audit coverage restored</h3><p>done · q2-fy27 · security</p><p>Administrative index actions produce complete, traceable audit events.</p><p>Epics: SEC-302</p></article><article><h3>Tenant isolation controls</h3><p>blocked · q3-fy27 · security</p><p>Cross-workspace access is bounded by an agreed tenant-isolation contract.</p><p>Epics: SEC-303</p></article><article><h3>Independent security review</h3><p>on_track · q3-fy27 · security</p><p>Design and test evidence are reviewed before broad rollout.</p><p>Epics: SEC-304</p></article><article><h3>Access controls certified</h3><p>not_started · q3-fy27 · security</p><p>Release evidence confirms permitted access and prevents cross-tenant disclosure.</p><p>Epics: SEC-303, SEC-304</p></article><article><h3>Retention &amp; deletion controls</h3><p>on_track · q2-fy27 · security</p><p>Expired content is removed from source indexes and derived representations.</p><p>Epics: SEC-305</p></article><article><h3>Service ownership established</h3><p>done · q2-fy27 · adoption</p><p>Service owners, alert routes, and support boundaries are agreed.</p><p>Epics: None</p></article><article><h3>Pilot cohorts onboarded</h3><p>done · q2-fy27 · adoption</p><p>Two fictional cohorts have training, feedback channels, and success criteria.</p><p>Epics: E4101</p></article><article><h3>Client SDK migration</h3><p>at_risk · q3-fy27 · adoption</p><p>Pilot clients adopt a versioned API and retire their legacy search calls.</p><p>Epics: E4102, NS-102</p></article><article><h3>Recovery runbooks rehearsed</h3><p>blocked · q3-fy27 · adoption</p><p>On-call engineers can execute recovery steps without specialist support.</p><p>Epics: E4103</p></article><article><h3>First adoption wave</h3><p>not_started · q4-fy27 · adoption</p><p>The first wider cohort adopts the platform with measured support readiness.</p><p>Epics: E4101, E4104</p></article><article><h3>Operational handover complete</h3><p>not_started · q4-fy27 · adoption</p><p>Steady-state teams own service health, recovery, and continuous improvement.</p><p>Epics: E4103, E4104</p></article></section></noscript>
   </main>
+  <dialog id="settings-dialog" class="settings-dialog" aria-labelledby="settings-title" aria-describedby="settings-description">
+    <div class="settings-head"><div><h2 id="settings-title">Display settings</h2><p id="settings-description">Choose the extra context you want to see.</p></div><button class="close-detail" id="close-settings" type="button" aria-label="Close display settings" autofocus>×</button></div>
+    <div class="settings-body">
+      <label class="setting-row"><span><strong>Count cards</strong><small>Milestones, delivered outcomes, items needing attention, and epics.</small></span><input id="display-counts" type="checkbox" aria-label="Count cards" aria-controls="metrics"></label>
+      <label class="setting-row"><span><strong>Search and filters</strong><small>Find milestones by stream, team, status, period, or epic.</small></span><input id="display-filters" type="checkbox" aria-label="Search and filters" aria-controls="filters"></label>
+      <label class="setting-row"><span><strong>Programme health</strong><small>Overall health and the latest assessment.</small></span><input id="display-health" type="checkbox" aria-label="Programme health" aria-controls="health-card"></label>
+      <label class="setting-row"><span><strong>Plan summary</strong><small>The short description below the plan title.</small></span><input id="display-summary" type="checkbox" aria-label="Plan summary" aria-controls="plan-summary"></label>
+      <p class="settings-note">Applies across all three views until you reload this page. Active filters remain applied when their controls are hidden.</p>
+    </div>
+    <div class="settings-footer"><button class="button" id="hide-all-panels" type="button">Hide all</button><button class="button primary" id="done-settings" type="button">Done</button></div>
+  </dialog>
   <dialog id="milestone-dialog" aria-labelledby="detail-title"><div id="detail-content"></div></dialog>
   <script type="application/json" id="plan-data">{"data":{"schema_version":1,"plan":{"id":"north-star-platform","title":"North Star Platform Delivery Plan","as_of":"2026-10-24","reporting_owner":"Programme Lead \u00b7 North Star Platform","summary":"A shared roadmap for better discovery, a resilient platform, and a confident rollout. Fictional public example."},"periods":[{"id":"q2-fy27","label":"Q2 FY27","start":"2026-09-01","end":"2026-11-30"},{"id":"q3-fy27","label":"Q3 FY27","start":"2026-12-01","end":"2027-02-28"},{"id":"q4-fy27","label":"Q4 FY27","start":"2027-03-01","end":"2027-05-31"}],"streams":[{"id":"features","title":"Feature Delivery","description":"Search experiences and customer outcomes."},{"id":"platform","title":"Platform","description":"Ingestion, scale, and service resilience."},{"id":"security","title":"Security","description":"Trust, access, and compliance controls."},{"id":"adoption","title":"Adoption \u0026 Operations","description":"Enablement, readiness, and reliable handover."}],"teams":[{"id":"search-experience","name":"Search Experience"},{"id":"platform-engineering","name":"Platform Engineering"},{"id":"trust-security","name":"Trust \u0026 Security"},{"id":"developer-enablement","name":"Developer Enablement"},{"id":"site-reliability","name":"Site Reliability"},{"id":"customer-adoption","name":"Customer Adoption"}],"milestones":[{"id":"relevance-baseline","title":"Relevance baseline established","stream":"features","target_period":"q2-fy27","owner_team":"search-experience","contributing_teams":["customer-adoption"],"status":"done","tag":"planned","epic_ids":["NS-101"],"outcome":"A repeatable evaluation suite covers the 50 most common search journeys.","notes":"Benchmark approved on 16 October. Synthetic evaluation data and success criteria are available to every stream.","executive_visible":false,"target_date":"2026-10-16"},{"id":"search-pilot","title":"Unified search pilot","stream":"features","target_period":"q2-fy27","owner_team":"search-experience","contributing_teams":["trust-security","customer-adoption"],"status":"on_track","tag":"planned","epic_ids":["NS-101","NS-102"],"outcome":"Two pilot cohorts can search projects and documents from one entry point.","notes":"Integration is complete. Permission-model verification is the final gate before pilot access.","executive_visible":true,"target_date":"2026-11-20"},{"id":"semantic-preview","title":"Semantic search preview","stream":"features","target_period":"q3-fy27","owner_team":"search-experience","contributing_teams":["platform-engineering"],"status":"at_risk","tag":"planned","epic_ids":["NS-103","PLAT-203"],"outcome":"Pilot users can find relevant content using natural-language queries.","notes":"The ranking prototype is ready. Production-like testing depends on the pending embeddings-capacity decision.","executive_visible":true,"target_date":"2027-02-15"},{"id":"saved-search-alerts","title":"Saved searches \u0026 alerts","stream":"features","target_period":"q3-fy27","owner_team":"search-experience","contributing_teams":["developer-enablement"],"status":"on_track","tag":"planned","epic_ids":["NS-104"],"outcome":"Users can save recurring searches and receive a daily change digest.","notes":"Notification contracts and opt-out behavior are agreed; implementation is proceeding in parallel with the pilot.","executive_visible":false,"target_date":"2027-01-29"},{"id":"federated-search","title":"Cross-workspace discovery","stream":"features","target_period":"q4-fy27","owner_team":"search-experience","contributing_teams":["trust-security"],"status":"not_started","tag":"planned","epic_ids":["NS-105"],"outcome":"Authorized users can discover content across linked workspaces.","notes":"Delivery starts after tenant-isolation rules are implemented and reviewed.","executive_visible":false,"target_date":"2027-04-23"},{"id":"search-ga","title":"Search platform general availability","stream":"features","target_period":"q4-fy27","owner_team":"search-experience","contributing_teams":["platform-engineering","trust-security","site-reliability"],"status":"not_started","tag":"planned","epic_ids":["NS-103","NS-106"],"outcome":"Search is ready for broad adoption with performance and security evidence.","notes":"Release criteria include load certification, access certification, and the semantic preview exit review.","executive_visible":true,"target_date":"2027-05-14"},{"id":"indexing-foundation","title":"Indexing foundation ready","stream":"platform","target_period":"q2-fy27","owner_team":"platform-engineering","contributing_teams":["site-reliability"],"status":"done","tag":"planned","epic_ids":["PLAT-201"],"outcome":"A repeatable ingestion pipeline supports the first three content sources.","notes":"Recovery and replay checks passed on 9 October. The pilot integration environment is available.","executive_visible":false,"target_date":"2026-10-09"},{"id":"index-lag-fix","title":"Index freshness recovery","stream":"platform","target_period":"q2-fy27","owner_team":"platform-engineering","contributing_teams":["site-reliability"],"status":"on_track","tag":"unplanned","epic_ids":["PLAT-202"],"outcome":"Backlogged documents return to the agreed freshness window after bursts.","notes":"Added following a synthetic peak-load exercise. Worker backpressure fixes are in validation.","executive_visible":false,"target_date":"2026-11-06"},{"id":"embeddings-capacity","title":"Embeddings capacity secured","stream":"platform","target_period":"q3-fy27","owner_team":"platform-engineering","contributing_teams":["site-reliability"],"status":"at_risk","tag":"planned","epic_ids":["PLAT-203"],"outcome":"Reserved compute supports semantic preview traffic and evaluation runs.","notes":"The capacity reservation is awaiting approval. A smaller preview cohort is the fallback if funding is delayed.","executive_visible":true,"target_date":"2027-01-15"},{"id":"zero-downtime-reindex","title":"Zero-downtime reindexing","stream":"platform","target_period":"q3-fy27","owner_team":"platform-engineering","contributing_teams":["site-reliability"],"status":"on_track","tag":"planned","epic_ids":["PLAT-201","PLAT-204"],"outcome":"Indexes can be rebuilt without interrupting active search sessions.","notes":"Alias-switch rehearsals are passing in the integration environment.","executive_visible":false,"target_date":"2027-02-05"},{"id":"regional-resilience","title":"Regional recovery verified","stream":"platform","target_period":"q4-fy27","owner_team":"site-reliability","contributing_teams":["platform-engineering"],"status":"not_started","tag":"planned","epic_ids":["PLAT-205"],"outcome":"A regional failure can be recovered within the agreed recovery objective.","notes":"The recovery exercise will use the reindexing workflow and service runbooks.","executive_visible":false,"target_date":"2027-04-16"},{"id":"load-certification","title":"Scale \u0026 latency certification","stream":"platform","target_period":"q4-fy27","owner_team":"platform-engineering","contributing_teams":["site-reliability"],"status":"not_started","tag":"planned","epic_ids":["PLAT-201","PLAT-206"],"outcome":"Peak traffic meets the latency budget with documented capacity headroom.","notes":"The certification uses a fixed synthetic workload so results can be compared across releases.","executive_visible":false,"target_date":"2027-04-30"},{"id":"permission-model","title":"Permission-aware query model","stream":"security","target_period":"q2-fy27","owner_team":"trust-security","contributing_teams":["search-experience"],"status":"on_track","tag":"planned","epic_ids":["SEC-301"],"outcome":"Pilot results respect document and project access permissions.","notes":"The allow/deny matrix is agreed. Cross-source integration tests are the remaining work.","executive_visible":false,"target_date":"2026-11-13"},{"id":"audit-gap","title":"Audit coverage restored","stream":"security","target_period":"q2-fy27","owner_team":"trust-security","contributing_teams":["platform-engineering"],"status":"done","tag":"unplanned","epic_ids":["SEC-302"],"outcome":"Administrative index actions produce complete, traceable audit events.","notes":"A gap found in the readiness review was corrected and rechecked on 21 October.","executive_visible":false,"target_date":"2026-10-21"},{"id":"tenant-isolation","title":"Tenant isolation controls","stream":"security","target_period":"q3-fy27","owner_team":"trust-security","contributing_teams":["search-experience","platform-engineering"],"status":"blocked","tag":"planned","epic_ids":["SEC-303"],"outcome":"Cross-workspace access is bounded by an agreed tenant-isolation contract.","notes":"Implementation is paused pending the product decision on shared-workspace ownership and exception handling.","executive_visible":true,"target_date":"2027-01-22"},{"id":"security-review","title":"Independent security review","stream":"security","target_period":"q3-fy27","owner_team":"trust-security","contributing_teams":["platform-engineering"],"status":"on_track","tag":"planned","epic_ids":["SEC-304"],"outcome":"Design and test evidence are reviewed before broad rollout.","notes":"Review scope is agreed, with evidence collection underway across search and platform teams.","executive_visible":false,"target_date":"2027-02-19"},{"id":"access-certification","title":"Access controls certified","stream":"security","target_period":"q3-fy27","owner_team":"trust-security","contributing_teams":["search-experience"],"status":"not_started","tag":"planned","epic_ids":["SEC-303","SEC-304"],"outcome":"Release evidence confirms permitted access and prevents cross-tenant disclosure.","notes":"Certification follows closure of the independent review findings.","executive_visible":true,"target_date":"2027-02-26"},{"id":"retention-controls","title":"Retention \u0026 deletion controls","stream":"security","target_period":"q2-fy27","owner_team":"trust-security","contributing_teams":["platform-engineering"],"status":"on_track","tag":"planned","epic_ids":["SEC-305"],"outcome":"Expired content is removed from source indexes and derived representations.","notes":"Policy scenarios are drafted; implementation can proceed independently of the tenant ownership decision.","executive_visible":false,"target_date":"2026-11-27"},{"id":"service-readiness","title":"Service ownership established","stream":"adoption","target_period":"q2-fy27","owner_team":"site-reliability","contributing_teams":["platform-engineering","developer-enablement"],"status":"done","tag":"planned","epic_ids":[],"outcome":"Service owners, alert routes, and support boundaries are agreed.","notes":"The fictional readiness workshop closed on 14 October. This operational outcome is intentionally not linked to an epic.","executive_visible":false,"target_date":"2026-10-14"},{"id":"pilot-onboarding","title":"Pilot cohorts onboarded","stream":"adoption","target_period":"q2-fy27","owner_team":"customer-adoption","contributing_teams":["search-experience"],"status":"done","tag":"planned","epic_ids":["E4101"],"outcome":"Two fictional cohorts have training, feedback channels, and success criteria.","notes":"Preparation is complete. Cohort access opens when the unified search pilot is ready.","executive_visible":false,"target_date":"2026-10-23"},{"id":"sdk-migration","title":"Client SDK migration","stream":"adoption","target_period":"q3-fy27","owner_team":"developer-enablement","contributing_teams":["search-experience","customer-adoption"],"status":"at_risk","tag":"planned","epic_ids":["E4102","NS-102"],"outcome":"Pilot clients adopt a versioned API and retire their legacy search calls.","notes":"One consumer team has competing delivery commitments. A phased migration is proposed to protect the pilot exit date.","executive_visible":true,"target_date":"2027-02-12"},{"id":"runbook-hardening","title":"Recovery runbooks rehearsed","stream":"adoption","target_period":"q3-fy27","owner_team":"site-reliability","contributing_teams":["developer-enablement"],"status":"blocked","tag":"unplanned","epic_ids":["E4103"],"outcome":"On-call engineers can execute recovery steps without specialist support.","notes":"The rehearsal environment needs access provisioning by the shared operations team. The request is open and tracked by the reliability lead.","executive_visible":false,"target_date":"2027-02-26"},{"id":"adoption-wave-one","title":"First adoption wave","stream":"adoption","target_period":"q4-fy27","owner_team":"customer-adoption","contributing_teams":["developer-enablement","search-experience"],"status":"not_started","tag":"planned","epic_ids":["E4101","E4104"],"outcome":"The first wider cohort adopts the platform with measured support readiness.","notes":"The launch sequence pairs onboarding with the completion of general-availability gates.","executive_visible":true,"target_date":"2027-05-21"},{"id":"operational-handover","title":"Operational handover complete","stream":"adoption","target_period":"q4-fy27","owner_team":"site-reliability","contributing_teams":["customer-adoption","platform-engineering"],"status":"not_started","tag":"planned","epic_ids":["E4103","E4104"],"outcome":"Steady-state teams own service health, recovery, and continuous improvement.","notes":"The handover requires regional recovery evidence and feedback from the first adoption wave.","executive_visible":false,"target_date":"2027-05-28"}],"dependencies":[{"from":"indexing-foundation","to":"relevance-baseline","kind":"requires","note":"The evaluation suite runs on the delivered indexing foundation."},{"from":"indexing-foundation","to":"search-pilot","kind":"requires","note":"The pilot requires content ingestion and replay support."},{"from":"permission-model","to":"search-pilot","kind":"requires","note":"Pilot access requires the permission-aware query model."},{"from":"search-pilot","to":"semantic-preview","kind":"requires","note":"Preview feedback depends on completing the initial pilot."},{"from":"embeddings-capacity","to":"semantic-preview","kind":"requires","note":"The semantic preview needs its reserved compute capacity."},{"from":"indexing-foundation","to":"zero-downtime-reindex","kind":"requires","note":"Reindexing builds on the baseline ingestion pipeline."},{"from":"zero-downtime-reindex","to":"regional-resilience","kind":"requires","note":"The regional exercise uses the reindexing workflow."},{"from":"tenant-isolation","to":"federated-search","kind":"requires","note":"Cross-workspace discovery requires explicit isolation controls."},{"from":"security-review","to":"access-certification","kind":"requires","note":"Certification closes findings from the independent review."},{"from":"load-certification","to":"search-ga","kind":"requires","note":"General availability requires the performance evidence."},{"from":"access-certification","to":"search-ga","kind":"requires","note":"General availability requires verified access controls."},{"from":"semantic-preview","to":"search-ga","kind":"requires","note":"Preview exit criteria must be met before broad release."},{"from":"search-ga","to":"adoption-wave-one","kind":"requires","note":"The wider cohort adopts the generally available release."},{"from":"adoption-wave-one","to":"operational-handover","kind":"requires","note":"Handover incorporates the first-wave support feedback."},{"from":"regional-resilience","to":"operational-handover","kind":"requires","note":"Operations needs proven recovery evidence."},{"from":"service-readiness","to":"search-pilot","kind":"enables","note":"Clear service ownership helps the pilot operate smoothly."},{"from":"zero-downtime-reindex","to":"sdk-migration","kind":"enables","note":"Stable index rebuilds simplify client migration testing."},{"from":"audit-gap","to":"retention-controls","kind":"enables","note":"Audit events support verification of deletion workflows."},{"from":"relevance-baseline","to":"security-review","kind":"relates_to","note":"The teams coordinate on representative permission-sensitive test cases."},{"from":"runbook-hardening","to":"regional-resilience","kind":"relates_to","note":"Runbooks and the regional exercise share operational learning."},{"from":"pilot-onboarding","to":"search-pilot","kind":"relates_to","note":"The onboarding and release teams coordinate cohort access."}],"reporting":{"overall_health":"at_risk","health_note":"Q2 is holding. Capacity and tenant-isolation decisions put two Q3 outcomes at risk.","highlights":["The indexing foundation and relevance baseline are complete; pilot integration is progressing.","Both pilot cohorts are prepared. Permission verification is the final gate before access.","Audit coverage is restored, with no change to the planned pilot date."],"changes_since_last_report":["Pilot onboarding and audit remediation moved to Done.","Recovery rehearsal was added as unplanned work after the readiness review.","Semantic preview is At risk pending the compute-capacity decision."],"risks":[{"id":"compute-capacity","title":"Semantic preview capacity","severity":"high","owner":"Platform Engineering Lead","milestone_ids":["embeddings-capacity","semantic-preview"],"mitigation":"Reserve a smaller capacity block and reduce the preview cohort if full funding is delayed."},{"id":"ownership-contract","title":"Tenant ownership decision","severity":"high","owner":"Trust \u0026 Security Lead","milestone_ids":["tenant-isolation","federated-search"],"mitigation":"Resolve the shared-workspace ownership contract before implementation resumes."},{"id":"consumer-capacity","title":"Client migration capacity","severity":"medium","owner":"Developer Enablement Lead","milestone_ids":["sdk-migration"],"mitigation":"Stage the migration by consumer and retain compatibility through the pilot exit."}],"decisions_needed":[{"id":"capacity-reservation","title":"Approve the compute reservation","owner":"Programme Sponsor","due_date":"2026-10-30","status":"open","milestone_ids":["embeddings-capacity"],"ask":"Choose full preview capacity or the smaller cohort fallback for Q3."},{"id":"tenant-contract","title":"Confirm shared-workspace ownership","owner":"Product \u0026 Trust Leads","due_date":"2026-11-05","status":"open","milestone_ids":["tenant-isolation"],"ask":"Agree the ownership and exception model so isolation implementation can resume."},{"id":"pilot-cohorts","title":"Select the initial pilot cohorts","owner":"Product Lead","due_date":"2026-10-16","status":"resolved","milestone_ids":["pilot-onboarding"],"ask":"Two fictional cohorts were selected with agreed success criteria."}]},"view":{"default_audience":"delivery","show_dependencies":false},"publish":{"directory":null}},"diagnostics":[],"version":"1.0.0","fingerprint":"4f66ec2aa488a62541845b5972daddb02066382f406396242ec5da50c3d7d5c4"}</script>
   <script>(() => {
@@ -371,6 +379,7 @@ h1{font-size:28px}
   const periods = Object.fromEntries(plan.periods.map(p => [p.id,p]));
   const epicKeys = [...new Set(plan.milestones.flatMap(m => m.epic_ids))];
   const filters = {search:'',stream:'',team:'',status:'',tag:'',period:'',epic:''};
+  const display = {counts:false, filters:false, health:false, summary:false};
   const state = {view:plan.view.default_audience, showDeps:plan.view.show_dependencies, selected:null, filters};
   let lastFocus = null, observer = null, drawScheduled = false;
   const $ = id => document.getElementById(id);
@@ -459,6 +468,15 @@ h1{font-size:28px}
   function resetFilters() {
     Object.keys(filters).forEach(key => {filters[key]='';$(`filter-${key}`).value='';});
   }
+  function applyDisplay() {
+    for (const [key,id] of Object.entries({counts:'metrics',filters:'filters',health:'health-card',summary:'plan-summary'})) {
+      $(id).hidden=!display[key];
+      $(`display-${key}`).checked=display[key];
+    }
+    // Never conceal an active filter or selection when optional panels are hidden.
+    $('filter-summary').hidden=!display.filters && !activeFilters() && !state.selected;
+    requestDraw();
+  }
   function render() {
     if (observer) observer.disconnect();
     const items = visibleMilestones();
@@ -468,7 +486,8 @@ h1{font-size:28px}
     });
     $('view-content').setAttribute('aria-labelledby',`tab-${state.view}`);
     const f = Object.entries(filters).filter(([,v]) => v).map(([k,v]) => `${k}: ${k === 'team' ? teams[v] : k === 'stream' ? streams[v] : k === 'status' ? labels[v] : k === 'period' ? periods[v].label : v}`);
-    $('filter-summary').innerHTML = `<span><strong>${items.length}</strong> ${state.view === 'executive' ? 'executive ' : ''}milestone${items.length === 1 ? '' : 's'} shown <span aria-hidden="true">·</span> ${plan.milestones.length} in the full plan${f.length ? ` <span aria-hidden="true">/</span> ${escape(f.join(' · '))}` : ''}</span><span id="selection-summary">${state.selected ? `Selected: ${escape(byId[state.selected].title)}` : 'All dates and statuses are as reported'}</span>`;
+    $('filter-summary').innerHTML = `<span><strong>${items.length}</strong> ${state.view === 'executive' ? 'executive ' : ''}milestone${items.length === 1 ? '' : 's'} shown <span aria-hidden="true">·</span> ${plan.milestones.length} in the full plan${f.length ? ` <span aria-hidden="true">/</span> ${escape(f.join(' · '))} <button class="text-button" id="clear-active-filters" type="button">Clear filters</button>` : ''}</span><span id="selection-summary">${state.selected ? `Selected: ${escape(byId[state.selected].title)}` : 'All dates and statuses are as reported'}</span>`;
+    if ($('clear-active-filters')) $('clear-active-filters').addEventListener('click',()=>{resetFilters();render();$('view-content').focus({preventScroll:true});});
     const draft = !plan.plan.as_of || !plan.periods.length || !plan.streams.length || !plan.milestones.length;
     $('view-content').innerHTML = (draft ? '<div class="draft-banner"><strong>Draft plan</strong> · Complete the reporting date, periods, streams, and milestones before publishing.</div>' : '') + (state.view === 'executive' ? executive(items) : state.view === 'backlog_epic' ? epicView(items) : board(items));
     if ($('show-dependencies')) $('show-dependencies').addEventListener('change',event => {state.showDeps=event.target.checked;requestDraw();});
@@ -480,7 +499,7 @@ h1{font-size:28px}
       observer = new ResizeObserver(requestDraw);observer.observe($('roadmap'));
       $('board-scroll').addEventListener('scroll',requestDraw,{passive:true});
     }
-    requestDraw();
+    applyDisplay();
   }
   function requestDraw() {
     if (drawScheduled) return;
@@ -522,6 +541,7 @@ h1{font-size:28px}
     state.selected=id;
     if ($('clear-selection')) $('clear-selection').hidden=false;
     $('selection-summary').textContent=`Selected: ${m.title}`;
+    applyDisplay();
     const visible=new Set(visibleMilestones().map(m=>m.id));
     const relations=plan.dependencies.filter(e=>e.from===id||e.to===id);
     const relationships=relations.map(e=>{
@@ -548,8 +568,7 @@ h1{font-size:28px}
     for (const [value,label] of entries) {const option=document.createElement('option');option.value=value;option.textContent=label;$(id).append(option);}
   }
   function initialize() {
-    $('report-date').textContent=dateLabel(plan.plan.as_of);
-    $('horizon-label').textContent=plan.periods.length?`${plan.periods[0].label} — ${plan.periods.at(-1).label}`:'Planning horizon';
+    $('report-date').textContent=plan.plan.as_of?dateLabel(plan.plan.as_of):'Draft';
     const health=plan.reporting.overall_health || 'unknown';
     $('health-card').className=`health-card health-${health}`;
     $('health-card').innerHTML=`<div class="health-caption">PROGRAMME HEALTH</div><div class="health-title">${plan.reporting.overall_health ? badge(health) : '<span class="badge status-unknown">Not provided</span>'}</div><p>${escape(plan.reporting.health_note||'Health commentary not provided.')}</p>`;
@@ -561,6 +580,12 @@ h1{font-size:28px}
     addOptions('filter-period',plan.periods.map(p=>[p.id,p.label]));addOptions('filter-epic',epicKeys.map(key=>[key,key]));
     Object.keys(filters).forEach(key=>$(`filter-${key}`).addEventListener(key==='search'?'input':'change',event=>{filters[key]=event.target.value;render();}));
     $('reset-filters').addEventListener('click',()=>{resetFilters();render();});
+    $('settings-button').addEventListener('click',()=>{$('settings-dialog').showModal();$('settings-button').setAttribute('aria-expanded','true');});
+    for (const key of Object.keys(display)) $(`display-${key}`).addEventListener('change',event=>{display[key]=event.target.checked;applyDisplay();});
+    $('hide-all-panels').addEventListener('click',()=>{Object.keys(display).forEach(key=>display[key]=false);applyDisplay();});
+    for (const id of ['close-settings','done-settings']) $(id).addEventListener('click',()=>$('settings-dialog').close());
+    $('settings-dialog').addEventListener('click',event=>{if(event.target===$('settings-dialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close();}});
+    $('settings-dialog').addEventListener('close',()=>{$('settings-button').setAttribute('aria-expanded','false');$('settings-button').focus({preventScroll:true});});
     document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{state.view=button.dataset.view;state.selected=null;render();}));
     document.querySelector('.view-tabs').addEventListener('keydown',event=>{
       const tabs=[...document.querySelectorAll('[data-view]')];let i=tabs.indexOf(document.activeElement);if(i<0)return;

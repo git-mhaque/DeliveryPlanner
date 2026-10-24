@@ -10,6 +10,7 @@
   const periods = Object.fromEntries(plan.periods.map(p => [p.id,p]));
   const epicKeys = [...new Set(plan.milestones.flatMap(m => m.epic_ids))];
   const filters = {search:'',stream:'',team:'',status:'',tag:'',period:'',epic:''};
+  const display = {counts:false, filters:false, health:false, summary:false};
   const state = {view:plan.view.default_audience, showDeps:plan.view.show_dependencies, selected:null, filters};
   let lastFocus = null, observer = null, drawScheduled = false;
   const $ = id => document.getElementById(id);
@@ -98,6 +99,15 @@
   function resetFilters() {
     Object.keys(filters).forEach(key => {filters[key]='';$(`filter-${key}`).value='';});
   }
+  function applyDisplay() {
+    for (const [key,id] of Object.entries({counts:'metrics',filters:'filters',health:'health-card',summary:'plan-summary'})) {
+      $(id).hidden=!display[key];
+      $(`display-${key}`).checked=display[key];
+    }
+    // Never conceal an active filter or selection when optional panels are hidden.
+    $('filter-summary').hidden=!display.filters && !activeFilters() && !state.selected;
+    requestDraw();
+  }
   function render() {
     if (observer) observer.disconnect();
     const items = visibleMilestones();
@@ -107,7 +117,8 @@
     });
     $('view-content').setAttribute('aria-labelledby',`tab-${state.view}`);
     const f = Object.entries(filters).filter(([,v]) => v).map(([k,v]) => `${k}: ${k === 'team' ? teams[v] : k === 'stream' ? streams[v] : k === 'status' ? labels[v] : k === 'period' ? periods[v].label : v}`);
-    $('filter-summary').innerHTML = `<span><strong>${items.length}</strong> ${state.view === 'executive' ? 'executive ' : ''}milestone${items.length === 1 ? '' : 's'} shown <span aria-hidden="true">·</span> ${plan.milestones.length} in the full plan${f.length ? ` <span aria-hidden="true">/</span> ${escape(f.join(' · '))}` : ''}</span><span id="selection-summary">${state.selected ? `Selected: ${escape(byId[state.selected].title)}` : 'All dates and statuses are as reported'}</span>`;
+    $('filter-summary').innerHTML = `<span><strong>${items.length}</strong> ${state.view === 'executive' ? 'executive ' : ''}milestone${items.length === 1 ? '' : 's'} shown <span aria-hidden="true">·</span> ${plan.milestones.length} in the full plan${f.length ? ` <span aria-hidden="true">/</span> ${escape(f.join(' · '))} <button class="text-button" id="clear-active-filters" type="button">Clear filters</button>` : ''}</span><span id="selection-summary">${state.selected ? `Selected: ${escape(byId[state.selected].title)}` : 'All dates and statuses are as reported'}</span>`;
+    if ($('clear-active-filters')) $('clear-active-filters').addEventListener('click',()=>{resetFilters();render();$('view-content').focus({preventScroll:true});});
     const draft = !plan.plan.as_of || !plan.periods.length || !plan.streams.length || !plan.milestones.length;
     $('view-content').innerHTML = (draft ? '<div class="draft-banner"><strong>Draft plan</strong> · Complete the reporting date, periods, streams, and milestones before publishing.</div>' : '') + (state.view === 'executive' ? executive(items) : state.view === 'backlog_epic' ? epicView(items) : board(items));
     if ($('show-dependencies')) $('show-dependencies').addEventListener('change',event => {state.showDeps=event.target.checked;requestDraw();});
@@ -119,7 +130,7 @@
       observer = new ResizeObserver(requestDraw);observer.observe($('roadmap'));
       $('board-scroll').addEventListener('scroll',requestDraw,{passive:true});
     }
-    requestDraw();
+    applyDisplay();
   }
   function requestDraw() {
     if (drawScheduled) return;
@@ -161,6 +172,7 @@
     state.selected=id;
     if ($('clear-selection')) $('clear-selection').hidden=false;
     $('selection-summary').textContent=`Selected: ${m.title}`;
+    applyDisplay();
     const visible=new Set(visibleMilestones().map(m=>m.id));
     const relations=plan.dependencies.filter(e=>e.from===id||e.to===id);
     const relationships=relations.map(e=>{
@@ -187,8 +199,7 @@
     for (const [value,label] of entries) {const option=document.createElement('option');option.value=value;option.textContent=label;$(id).append(option);}
   }
   function initialize() {
-    $('report-date').textContent=dateLabel(plan.plan.as_of);
-    $('horizon-label').textContent=plan.periods.length?`${plan.periods[0].label} — ${plan.periods.at(-1).label}`:'Planning horizon';
+    $('report-date').textContent=plan.plan.as_of?dateLabel(plan.plan.as_of):'Draft';
     const health=plan.reporting.overall_health || 'unknown';
     $('health-card').className=`health-card health-${health}`;
     $('health-card').innerHTML=`<div class="health-caption">PROGRAMME HEALTH</div><div class="health-title">${plan.reporting.overall_health ? badge(health) : '<span class="badge status-unknown">Not provided</span>'}</div><p>${escape(plan.reporting.health_note||'Health commentary not provided.')}</p>`;
@@ -200,6 +211,12 @@
     addOptions('filter-period',plan.periods.map(p=>[p.id,p.label]));addOptions('filter-epic',epicKeys.map(key=>[key,key]));
     Object.keys(filters).forEach(key=>$(`filter-${key}`).addEventListener(key==='search'?'input':'change',event=>{filters[key]=event.target.value;render();}));
     $('reset-filters').addEventListener('click',()=>{resetFilters();render();});
+    $('settings-button').addEventListener('click',()=>{$('settings-dialog').showModal();$('settings-button').setAttribute('aria-expanded','true');});
+    for (const key of Object.keys(display)) $(`display-${key}`).addEventListener('change',event=>{display[key]=event.target.checked;applyDisplay();});
+    $('hide-all-panels').addEventListener('click',()=>{Object.keys(display).forEach(key=>display[key]=false);applyDisplay();});
+    for (const id of ['close-settings','done-settings']) $(id).addEventListener('click',()=>$('settings-dialog').close());
+    $('settings-dialog').addEventListener('click',event=>{if(event.target===$('settings-dialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close();}});
+    $('settings-dialog').addEventListener('close',()=>{$('settings-button').setAttribute('aria-expanded','false');$('settings-button').focus({preventScroll:true});});
     document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{state.view=button.dataset.view;state.selected=null;render();}));
     document.querySelector('.view-tabs').addEventListener('keydown',event=>{
       const tabs=[...document.querySelectorAll('[data-view]')];let i=tabs.indexOf(document.activeElement);if(i<0)return;

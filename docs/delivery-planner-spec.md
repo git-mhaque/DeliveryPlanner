@@ -324,13 +324,17 @@ Templates must retain these enum comments beside editable values. Generated HTML
 
 ### Visual theme
 
-Use the Redwood visual theme: warm neutral canvas and white cards, a charcoal application header, pine and teal accents, restrained sienna highlights, clear sans-serif typography, subtle borders, and modest corner radii. Selected tabs use an underline. Status badges retain readable text labels alongside colour.
+Use the Redwood visual theme: warm neutral canvas and white cards, charcoal text, pine and teal accents, restrained sienna highlights, clear sans-serif typography, subtle borders, and modest corner radii. Selected tabs use an underline. Status badges retain readable text labels alongside colour. Keep the header compact with the plan title and view navigation; omit the dark application banner and office branding. Place the reporting snapshot, Print / PDF, and a settings icon alongside the view tabs, wrapping neatly on narrow screens.
 
 Maintain these styles in the shared renderer templates, so every generated plan inherits the same design. Use system fonts and inline assets to preserve offline portability. Keep vendor branding out of plan content and project documentation.
 
 ### Shared behavior
 
 - Show plan title, reporting date, and view navigation.
+- Provide an accessible Display settings overlay with independent toggles for count cards, search and filters, programme health, and the plan summary. All four are hidden by default, including before JavaScript initializes. Provide Hide all, close, and Escape actions, and restore focus to the settings button on dismissal.
+- Apply display settings across all three views for the current page session. Reloading returns to the compact defaults. Settings do not change YAML, delivery data, or the generated artifact.
+- Hiding search/filter controls preserves active filters. Retain a visible result summary and Clear filters action whenever filters are active; retain selection context while a milestone is selected. Otherwise hide the result strip when filter controls are hidden.
+- Optional panels remain hidden in print unless enabled. Keep the reporting date and any active filter context in printed output. Executive risks, decisions, and exception reporting remain core view content.
 - Include a legend with status and relationship meanings. Use text or icons as well as colour.
 - Keep browser view/filter changes local to the current page session; they do not edit YAML.
 - Support keyboard navigation, visible focus, readable contrast, and card details accessible without hover.
@@ -419,7 +423,7 @@ The schema is the executable source of structural rules. Document enum meanings 
 
 After the skill is functional, create `Plans/north-star-platform/` through its Create mode, populate the YAML, Validate it, and generate its `delivery_plan.html` through Update.
 
-Use a fictional product named **North Star Platform**, with the plan title **North Star Platform Delivery Plan**. Use fictional or generic names throughout the specification, templates, and example; do not include internal plan or product names. All team names, epic keys, people/roles, outcomes, commentary, and status claims are invented for the example. Include a visible “Fictional public example” description. Use synthetic epic keys stored directly on milestones; do not include internal links or copied project information.
+Use a fictional product named **North Star Platform**, with the plan title **North Star Platform Delivery Plan**. Use fictional or generic names throughout the specification, templates, and example; do not include internal plan or product names. All team names, epic keys, people/roles, outcomes, commentary, and status claims are invented for the example. Include “Fictional public example” in the authored plan summary, available through Display settings. Use synthetic epic keys stored directly on milestones; do not include internal links or copied project information.
 
 The maintained example should contain:
 

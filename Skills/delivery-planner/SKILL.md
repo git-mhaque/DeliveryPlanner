@@ -35,7 +35,7 @@ When multiple plans could match a request, inspect folder names and titles; reso
 
 ## Output and verification
 
-Preserve the shared Redwood visual theme: warm neutrals, charcoal header, pine/teal accents, readable status labels, and modest corners. Keep fonts and assets self-contained and vendor branding out of plan content and documentation. The maintained example is titled **North Star Platform Delivery Plan**.
+Preserve the shared Redwood visual theme: warm neutrals, charcoal text, pine/teal accents, readable status labels, and modest corners. Keep the header compact. Count cards, search/filters, programme health, and the summary are hidden by default and available through Display settings. Settings last until reload; active filters must remain visible in the result summary even when their controls are hidden. Keep fonts and assets self-contained and vendor branding out of plan content and documentation. The maintained example is titled **North Star Platform Delivery Plan**.
 
 After Update, link or open the generated HTML and identify material validation warnings. After Publish, identify both the local artifact and publication destination. The HTML includes all three views, works offline, and is the same artifact regardless of browser-selected view or filters.
 

@@ -57,7 +57,12 @@ Inspected the generated HTML through a localhost-only server in the Codex browse
 - Backlog Epic View contains 21 epic groups plus the unlinked-milestone group. Filtering to PLAT-201 produces one group with three milestones across three periods, with unique counts.
 - Keyboard arrow navigation switches tabs. Native controls and modal focus handling are available.
 - Desktop and 390-pixel viewport checks showed no page-wide horizontal overflow. The narrow roadmap scrolls within its own container.
-- Redwood styling and the full North Star Platform Delivery Plan title were inspected in all three views, including desktop and narrow-screen layouts. Shared templates apply warm neutrals, a charcoal header, underlined tabs, and consistent status badges.
+- Redwood styling uses warm neutrals, a compact title, underlined tabs, and consistent status badges. The reporting date, Print / PDF, and settings icon sit beside view navigation. The dark banner and office branding have been removed.
+- Count cards, search/filters, programme health, the summary, and the inactive result strip are hidden on initial load. The desktop roadmap begins about 138 pixels from the top at a 1440-pixel viewport width.
+- Display settings independently enables all four optional panels across the three views. Hide all restores the compact layout. Close, Done, and Escape dismiss the overlay and restore focus to its trigger. Reload resets the settings.
+- Hiding the controls with PLAT-201 selected preserves the one-epic, three-milestone result and its visible Clear filters action. Clearing restores all 22 groups (21 epic groups plus unlinked milestones) and hides the inactive result strip.
+- Dependency display still renders 21 valid relationships after enabling count cards. Selecting and clearing a milestone correctly shows and hides the selection summary.
+- The compact toolbar and settings overlay were inspected at a 390-pixel viewport width. The dialog fits inside the viewport and the page has no horizontal overflow.
 - No JavaScript errors were reported during the inspected interactions.
 
 ## Remaining manual browser checks

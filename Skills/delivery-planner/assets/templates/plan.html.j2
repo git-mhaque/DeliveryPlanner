@@ -10,25 +10,25 @@
 </head>
 <body>
   <a class="skip-link" href="#view-content">Skip to plan</a>
-  <header class="topbar">
-    <div class="wordmark"><span class="brand-icon" aria-hidden="true">✳</span><span>DELIVERY OFFICE</span></div>
-    <div class="topbar-right"><span class="snapshot-label">REPORTING SNAPSHOT</span><span id="report-date">{{ plan.as_of or 'Draft' }}</span><button class="button subtle" id="print-button" type="button"><span aria-hidden="true">↗</span> Print / PDF</button></div>
-  </header>
   <main class="workspace">
     <section class="hero" aria-labelledby="plan-title">
-      <div class="hero-copy"><div class="eyebrow"><span class="tiny-star" aria-hidden="true">✦</span> PROGRAMME ROADMAP <span class="separator">/</span> <span id="horizon-label"></span></div><h1 id="plan-title">{{ plan.title }}</h1><p class="hero-summary">{{ plan.get('summary', 'Your outcomes, teams, and dependencies in one place.') }}</p></div>
-      <div class="health-card" id="health-card"></div>
+      <div class="hero-copy"><h1 id="plan-title">{{ plan.title }}</h1><p class="hero-summary" id="plan-summary" hidden>{{ plan.get('summary', 'Your outcomes, teams, and dependencies in one place.') }}</p></div>
+      <div class="health-card" id="health-card" hidden></div>
     </section>
-    <section class="metrics" aria-label="Full plan milestone counts" id="metrics"></section>
+    <section class="metrics" aria-label="Full plan milestone counts" id="metrics" hidden></section>
     <div class="navigation-row">
       <nav class="view-tabs" role="tablist" aria-label="Plan views">
         <button type="button" id="tab-delivery" role="tab" data-view="delivery" aria-controls="view-content">▦ <span>Delivery View</span></button>
         <button type="button" id="tab-executive" role="tab" data-view="executive" aria-controls="view-content">◈ <span>Executive View</span></button>
         <button type="button" id="tab-backlog_epic" role="tab" data-view="backlog_epic" aria-controls="view-content">☷ <span>Backlog Epic View</span></button>
       </nav>
-      <span class="navigation-note">One plan. Three perspectives.</span>
+      <div class="utility-actions">
+        <span class="reporting-date">As of <time id="report-date"{% if plan.as_of %} datetime="{{ plan.as_of }}"{% endif %}>{{ plan.as_of or 'Draft' }}</time></span>
+        <button class="button compact-button" id="print-button" type="button"><span aria-hidden="true">↗</span> Print / PDF</button>
+        <button class="button icon-button" id="settings-button" type="button" aria-label="Display settings" title="Display settings" aria-haspopup="dialog" aria-controls="settings-dialog" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 3-.6 2.4-2 .9-2.2-.7-2 3.4L4 10.7v2.6l-1.8 1.7 2 3.4 2.2-.7 2 .9L9 21h6l.6-2.4 2-.9 2.2.7 2-3.4-1.8-1.7v-2.6L21.8 9l-2-3.4-2.2.7-2-.9L15 3Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      </div>
     </div>
-    <form class="filters" id="filters" aria-label="Filter milestones" onsubmit="return false">
+    <form class="filters" id="filters" aria-label="Filter milestones" onsubmit="return false" hidden>
       <label class="search-filter"><span>SEARCH</span><input id="filter-search" type="search" placeholder="Milestone, outcome or epic…" autocomplete="off"></label>
       <label><span>STREAM</span><select id="filter-stream"><option value="">All streams</option></select></label>
       <label><span>TEAM</span><select id="filter-team"><option value="">All teams</option></select></label>
@@ -38,12 +38,23 @@
       <label><span>EPIC</span><select id="filter-epic"><option value="">All epics</option></select></label>
       <button class="button reset-button" id="reset-filters" type="button">Reset</button>
     </form>
-    <div id="filter-summary" class="filter-summary" aria-live="polite"></div>
+    <div id="filter-summary" class="filter-summary" aria-live="polite" hidden></div>
     <section id="view-content" role="tabpanel" tabindex="-1"></section>
     <details id="diagnostics" class="diagnostics"></details>
     <footer class="page-footer"><span>DELIVERY PLANNER <span class="footer-divider">/</span> A shared view of what comes next.</span><span>Renderer {{ version }} · Source {{ fingerprint[:12] }}</span></footer>
     <noscript><section class="no-script"><h2>Milestone register</h2><p>Enable JavaScript for filters, interactive views, and dependency exploration. All data is embedded in this file.</p>{% for milestone in data.milestones %}<article><h3>{{ milestone.title }}</h3><p>{{ milestone.status }} · {{ milestone.target_period }} · {{ milestone.stream }}</p><p>{{ milestone.get('outcome', '') }}</p><p>Epics: {{ milestone.epic_ids | join(', ') or 'None' }}</p></article>{% endfor %}</section></noscript>
   </main>
+  <dialog id="settings-dialog" class="settings-dialog" aria-labelledby="settings-title" aria-describedby="settings-description">
+    <div class="settings-head"><div><h2 id="settings-title">Display settings</h2><p id="settings-description">Choose the extra context you want to see.</p></div><button class="close-detail" id="close-settings" type="button" aria-label="Close display settings" autofocus>×</button></div>
+    <div class="settings-body">
+      <label class="setting-row"><span><strong>Count cards</strong><small>Milestones, delivered outcomes, items needing attention, and epics.</small></span><input id="display-counts" type="checkbox" aria-label="Count cards" aria-controls="metrics"></label>
+      <label class="setting-row"><span><strong>Search and filters</strong><small>Find milestones by stream, team, status, period, or epic.</small></span><input id="display-filters" type="checkbox" aria-label="Search and filters" aria-controls="filters"></label>
+      <label class="setting-row"><span><strong>Programme health</strong><small>Overall health and the latest assessment.</small></span><input id="display-health" type="checkbox" aria-label="Programme health" aria-controls="health-card"></label>
+      <label class="setting-row"><span><strong>Plan summary</strong><small>The short description below the plan title.</small></span><input id="display-summary" type="checkbox" aria-label="Plan summary" aria-controls="plan-summary"></label>
+      <p class="settings-note">Applies across all three views until you reload this page. Active filters remain applied when their controls are hidden.</p>
+    </div>
+    <div class="settings-footer"><button class="button" id="hide-all-panels" type="button">Hide all</button><button class="button primary" id="done-settings" type="button">Done</button></div>
+  </dialog>
   <dialog id="milestone-dialog" aria-labelledby="detail-title"><div id="detail-content"></div></dialog>
   <script type="application/json" id="plan-data">{{ payload | safe }}</script>
   <script>{{ js | safe }}</script>
