@@ -28,7 +28,7 @@ kind: requires # Valid options: requires, enables, relates_to
 overall_health: unknown # Valid options: on_track, at_risk, blocked, unknown
 severity: medium # Valid options: low, medium, high
 default_audience: delivery # Valid options: delivery, executive, backlog_epic
-show_dependencies: false # Valid options: true, false
+show_dependencies: true # Valid options: true, false
 executive_visible: false # Valid options: true, false
 ```
 

@@ -12,7 +12,7 @@
   const filters = {search:'',stream:'',team:'',status:'',tag:'',period:'',epic:''};
   const display = {counts:false, filters:false, health:false, summary:false};
   const state = {view:plan.view.default_audience, showDeps:plan.view.show_dependencies, selected:null, filters};
-  let lastFocus = null, observer = null, drawScheduled = false;
+  let lastFocus = null, observer = null, drawScheduled = false, graphSignature = null, graphGeometry = null, graphRoutes = new Map();
   const $ = id => document.getElementById(id);
   const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const dateLabel = (date, year = true) => {
@@ -38,15 +38,15 @@
   function visibleMilestones() {
     return plan.milestones.filter(m => matches(m) && (state.view !== 'executive' || m.executive_visible));
   }
-  function card(m) {
+  function card(m, compact = false) {
     const selected = state.selected === m.id ? ' selected' : '';
     const linked = state.selected && plan.dependencies.some(e => (e.from === state.selected && e.to === m.id) || (e.to === state.selected && e.from === m.id));
     const epic = m.epic_ids.length ? `${m.epic_ids[0]}${m.epic_ids.length > 1 ? ` +${m.epic_ids.length-1}` : ''}` : 'No epic';
-    return `<button type="button" class="milestone${selected}${linked ? ' connected' : ''}" data-id="${escape(m.id)}" aria-label="${escape(`${m.title}, ${labels[m.status]}, ${periods[m.target_period].label}. Open details`)}">
+    return `<button type="button" class="milestone${compact ? ' graph-node' : ''}${selected}${linked ? ' connected' : ''}" data-id="${escape(m.id)}" aria-label="${escape(`${m.title}, ${labels[m.status]}, ${periods[m.target_period].label}. Open details`)}">
       <span class="milestone-top">${badge(m.status)}<span class="scope-tag ${m.tag}">${escape(m.tag)}</span></span>
       <span class="milestone-title">${escape(m.title)}</span>
-      <span class="milestone-outcome">${escape(m.outcome || 'Outcome not provided.')}</span>
-      <span class="milestone-bottom"><span class="team-name">${escape(teams[m.owner_team] || 'Owner unassigned')}</span><span class="epic-count">${escape(epic)}</span></span>
+      ${compact ? '' : `<span class="milestone-outcome">${escape(m.outcome || 'Outcome not provided.')}</span>`}
+      <span class="milestone-bottom"><span class="team-name">${escape(compact ? (m.target_date ? dateLabel(m.target_date,false) : periods[m.target_period].label) : (teams[m.owner_team] || 'Owner unassigned'))}</span><span class="epic-count">${escape(epic)}</span></span>
     </button>`;
   }
   function statusLegend() {
@@ -56,18 +56,14 @@
     if (!plan.periods.length || !plan.streams.length) return `<div class="board-section empty-state"><h2>Your roadmap starts here</h2><p>Add periods with start/end dates, streams, and milestones to plan.yaml, then run Update.</p></div>`;
     const heads = plan.periods.map(p => `<div class="board-head-cell">${escape(p.label)}${plan.plan.as_of && p.start <= plan.plan.as_of && p.end >= plan.plan.as_of ? '<span class="period-now">CURRENT</span>' : ''}<span class="period-dates">${dateLabel(p.start,false)} — ${dateLabel(p.end)}</span></div>`).join('');
     const rows = plan.streams.map((stream,i) => {
-      const streamItems = items.filter(m => m.stream === stream.id);
-      const cells = plan.periods.map(p => {
-        const cellItems = streamItems.filter(m => m.target_period === p.id);
-        const current = plan.plan.as_of && p.start <= plan.plan.as_of && p.end >= plan.plan.as_of;
-        return `<div class="period-cell${current ? ' current' : ''}" aria-label="${escape(`${stream.title}, ${p.label}`)}">${cellItems.length ? cellItems.map(card).join('') : '<span class="cell-empty">No milestones in this view</span>'}</div>`;
-      }).join('');
-      return `<div class="lane-row"><div class="lane-heading" style="--stream-color:${colours[i % colours.length]}"><span class="lane-number">STREAM ${String(i+1).padStart(2,'0')}</span><h3>${escape(stream.title)}</h3><p>${streamItems.length} milestone${streamItems.length === 1 ? '' : 's'}</p><div class="lane-accent"></div></div>${cells}</div>`;
+      const streamItems=items.filter(m=>m.stream===stream.id);
+      return `<section class="graph-lane" data-stream="${escape(stream.id)}" aria-label="${escape(stream.title)}" style="--stream-color:${colours[i%colours.length]}"><h3 class="stream-label"><span class="stream-dot"></span>${escape(stream.title)}<span class="stream-count">${streamItems.length}</span></h3>${streamItems.length ? '' : '<span class="lane-empty">No milestones in this view</span>'}</section>`;
     }).join('');
     const visible = new Set(items.map(m => m.id));
     const printLinks = plan.dependencies.filter(e => visible.has(e.from) || visible.has(e.to));
     return `<section class="board-section" aria-label="${executive ? 'Strategic milestones' : 'Delivery roadmap'}">
-      <div class="board-scroll" id="board-scroll" role="region" aria-label="Roadmap timeline" tabindex="0"><div class="roadmap" id="roadmap" style="--cols:${plan.periods.length}"><div class="board-head"><div class="board-head-cell">WORK STREAM</div>${heads}</div>${rows}<svg class="dependency-layer" id="dependency-layer" aria-hidden="true"></svg></div></div>
+      <div class="board-scroll" id="board-scroll" role="region" aria-label="Roadmap timeline" tabindex="0"><div class="roadmap" id="roadmap" style="--cols:${plan.periods.length}"><div class="board-head">${heads}</div>${rows}${items.map(m=>card(m,true)).join('')}<svg class="dependency-layer" id="dependency-layer" aria-hidden="true"></svg></div></div>
+      <div class="print-roadmap" aria-hidden="true">${items.map(m=>`<article><p>${escape(streams[m.stream])} · ${escape(periods[m.target_period].label)}</p>${card(m)}</article>`).join('')}</div>
       ${statusLegend()}<div class="print-dependencies"><strong>Dependencies (including linked milestones outside this view)</strong>${printLinks.map(e => `<div>${escape(byId[e.from].title)} ${e.kind === 'relates_to' ? '↔' : '→'} ${escape(byId[e.to].title)} · ${escape(kinds[e.kind])}</div>`).join('')}</div></section>`;
   }
   function reportingLinks(ids) {
@@ -106,10 +102,12 @@
     }
     // Never conceal an active filter or selection when optional panels are hidden.
     $('filter-summary').hidden=!display.filters && !activeFilters() && !state.selected;
+    $('result-context').hidden=$('filter-summary').hidden && !state.selected;
     requestDraw();
   }
   function render() {
     if (observer) observer.disconnect();
+    graphSignature=null;graphRoutes.clear();
     const items = visibleMilestones();
     document.querySelectorAll('[data-view]').forEach(button => {
       const active = button.dataset.view === state.view;
@@ -121,14 +119,14 @@
     if ($('clear-active-filters')) $('clear-active-filters').addEventListener('click',()=>{resetFilters();render();$('view-content').focus({preventScroll:true});});
     const draft = !plan.plan.as_of || !plan.periods.length || !plan.streams.length || !plan.milestones.length;
     $('view-content').innerHTML = (draft ? '<div class="draft-banner"><strong>Draft plan</strong> · Complete the reporting date, periods, streams, and milestones before publishing.</div>' : '') + (state.view === 'executive' ? executive(items) : state.view === 'backlog_epic' ? epicView(items) : board(items));
-    $('roadmap-controls').hidden=!$('roadmap');
     $('show-dependencies').checked=state.showDeps;
     $('clear-selection').hidden=!state.selected;
     if ($('expand-epics')) $('expand-epics').addEventListener('click',event=>{
       const details=[...document.querySelectorAll('.epic-group')];const expand=details.some(d=>!d.open);details.forEach(d=>d.open=expand);event.target.textContent=expand?'Collapse all':'Expand all';
     });
     if ($('roadmap')) {
-      observer = new ResizeObserver(requestDraw);observer.observe($('roadmap'));
+      observer = new ResizeObserver(requestDraw);observer.observe($('board-scroll'));
+      document.querySelectorAll('.graph-node').forEach(el=>observer.observe(el));
       $('board-scroll').addEventListener('scroll',requestDraw,{passive:true});
     }
     applyDisplay();
@@ -139,27 +137,29 @@
   }
   function drawDependencies() {
     const svg=$('dependency-layer'), root=$('roadmap');if (!svg || !root) return;
-    const box=root.getBoundingClientRect();
-    svg.setAttribute('width',String(root.scrollWidth));svg.setAttribute('height',String(root.scrollHeight));
+    root.classList.toggle('has-selection',Boolean(state.selected));
+    const elements=[...root.querySelectorAll('.graph-node')];
+    const heights=Object.fromEntries(elements.map(el=>[el.dataset.id,el.offsetHeight]));
+    const width=$('board-scroll').clientWidth;
+    const signature=JSON.stringify([width,heights]);
+    if(signature!==graphSignature){
+      graphSignature=signature;graphRoutes.clear();
+      graphGeometry=PlannerGraph.layout(plan.periods,plan.streams,visibleMilestones(),heights,width,plan.dependencies);
+      root.style.width=`${graphGeometry.width}px`;root.style.height=`${graphGeometry.height}px`;
+      for(const node of graphGeometry.nodes){const el=elements.find(el=>el.dataset.id===node.id);el.style.left=`${node.x}px`;el.style.top=`${node.y}px`;}
+      root.querySelectorAll('.graph-lane').forEach((el,i)=>{el.style.top=`${graphGeometry.lanes[i].y}px`;el.style.height=`${graphGeometry.lanes[i].height}px`;});
+    }
+    svg.setAttribute('width',String(graphGeometry.width));svg.setAttribute('height',String(graphGeometry.height));
     svg.innerHTML='<defs><marker id="dep-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#4f7d7b"/></marker></defs>';
     if (!state.showDeps && !state.selected) return;
-    const cards = new Map([...root.querySelectorAll('.milestone')].map(card=>[card.dataset.id,card]));
+    const nodes=new Map(graphGeometry.nodes.map(n=>[n.id,n]));
     for (const edge of plan.dependencies) {
       const focused=edge.from===state.selected || edge.to===state.selected;
       if (!state.showDeps && !focused) continue;
-      const from=cards.get(edge.from),to=cards.get(edge.to);if(!from||!to) continue;
-      const a=from.getBoundingClientRect(),b=to.getBoundingClientRect();
-      const ac=from.closest('.period-cell').getBoundingClientRect(),bc=to.closest('.period-cell').getBoundingClientRect();
-      const row=from.closest('.lane-row').getBoundingClientRect();
-      const sameColumn=Math.abs(ac.left-bc.left)<2;
-      const rightward=bc.left>ac.left;
-      const startX=(sameColumn || rightward ? a.right : a.left)-box.left;
-      const endX=(sameColumn ? b.right : rightward ? b.left : b.right)-box.left;
-      const startY=a.top+a.height/2-box.top,endY=b.top+b.height/2-box.top;
-      const gutterA=(sameColumn || rightward ? ac.right-6 : ac.left+6)-box.left;
-      const gutterB=(sameColumn ? bc.right-6 : rightward ? bc.left+6 : bc.right-6)-box.left;
-      const routeY=row.bottom-box.top-6;
-      const d=sameColumn?`M ${startX} ${startY} H ${gutterA} V ${endY} H ${endX}`:`M ${startX} ${startY} H ${gutterA} V ${routeY} H ${gutterB} V ${endY} H ${endX}`;
+      const from=nodes.get(edge.from),to=nodes.get(edge.to);if(!from||!to) continue;
+      const key=JSON.stringify([edge.from,edge.to]);
+      if(!graphRoutes.has(key))graphRoutes.set(key,PlannerGraph.path(PlannerGraph.route(from,to,graphGeometry.nodes,graphGeometry.width,graphGeometry.height)));
+      const d=graphRoutes.get(key);if(!d)continue;
       const path=document.createElementNS('http://www.w3.org/2000/svg','path');
       path.setAttribute('d',d);path.setAttribute('class',`dependency-path ${edge.kind}${focused?' selected-edge':''}`);
       path.dataset.from=edge.from;path.dataset.to=edge.to;
@@ -218,10 +218,10 @@
     Object.keys(filters).forEach(key=>$(`filter-${key}`).addEventListener(key==='search'?'input':'change',event=>{filters[key]=event.target.value;render();}));
     $('reset-filters').addEventListener('click',()=>{resetFilters();render();});
     $('show-dependencies').addEventListener('change',event=>{state.showDeps=event.target.checked;requestDraw();});
-    $('clear-selection').addEventListener('click',()=>{state.selected=null;render();$('show-dependencies').focus({preventScroll:true});});
+    $('clear-selection').addEventListener('click',()=>{state.selected=null;render();$('view-content').focus({preventScroll:true});});
     $('settings-button').addEventListener('click',()=>{$('settings-dialog').showModal();$('settings-button').setAttribute('aria-expanded','true');});
     for (const key of Object.keys(display)) $(`display-${key}`).addEventListener('change',event=>{display[key]=event.target.checked;applyDisplay();});
-    for (const [id,visible] of [['show-all-panels',true],['hide-all-panels',false]]) $(id).addEventListener('click',()=>{Object.keys(display).forEach(key=>display[key]=visible);applyDisplay();});
+    for (const [id,visible] of [['show-all-panels',true],['hide-all-panels',false]]) $(id).addEventListener('click',()=>{Object.keys(display).forEach(key=>display[key]=visible);state.showDeps=visible;$('show-dependencies').checked=visible;applyDisplay();});
     for (const id of ['close-settings','done-settings']) $(id).addEventListener('click',()=>$('settings-dialog').close());
     $('settings-dialog').addEventListener('click',event=>{if(event.target===$('settings-dialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close();}});
     $('settings-dialog').addEventListener('close',()=>{$('settings-button').setAttribute('aria-expanded','false');$('settings-button').focus({preventScroll:true});});

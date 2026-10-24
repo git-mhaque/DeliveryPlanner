@@ -23,7 +23,8 @@ Read `Skills/delivery-planner/SKILL.md` for plan operations and `references/data
 - Keep sample data fictional and documentation free of internal product names and vendor branding.
 - Preserve the Redwood visual theme and compact header. When enabled, programme health appears as a compact badge beside the title, with its assessment available on click. Count cards, search/filters, programme health, and the plan summary are hidden by default. All are controlled through Display settings.
 - Display settings last until reload and apply across all views. Never conceal active filters without retaining visible filter context and a way to clear them.
-- Maintain keyboard access, visible focus, responsive layouts, and print reporting context.
+- Maintain keyboard access, visible focus, responsive layouts, and print reporting context. Roadmaps use deterministic graph geometry with floating stream labels; keep compact nodes separate from detailed Backlog Epic cards.
+- `assets/templates/graph-layout.js` contains pure layout and connector routing. Check it with the Node geometry regression suite when graph behavior changes.
 
 ## Verification
 
@@ -34,6 +35,7 @@ Run checks appropriate to the change:
 ```sh
 Skills/delivery-planner/.venv/bin/python -m pytest Skills/delivery-planner/tests -q
 node --check Skills/delivery-planner/assets/templates/plan.js
+node --test Skills/delivery-planner/tests/graph-layout.test.cjs
 Skills/delivery-planner/.venv/bin/python Skills/delivery-planner/scripts/delivery_planner.py --root "$PWD" validate north-star-platform
 Skills/delivery-planner/.venv/bin/python Skills/delivery-planner/scripts/delivery_planner.py --root "$PWD" update north-star-platform
 git diff --check

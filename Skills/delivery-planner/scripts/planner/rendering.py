@@ -31,6 +31,7 @@ def render_plan(result: ValidationResult) -> tuple[bytes, str]:
         plan=result.data["plan"], data=result.data, version=VERSION,
         fingerprint=fingerprint, payload=serialized,
         css=(templates / "plan.css").read_text(encoding="utf-8"),
-        js=(templates / "plan.js").read_text(encoding="utf-8"),
+        js=(templates / "graph-layout.js").read_text(encoding="utf-8") + "\n" +
+           (templates / "plan.js").read_text(encoding="utf-8"),
     )
     return html.encode("utf-8"), fingerprint

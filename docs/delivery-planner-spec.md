@@ -312,7 +312,7 @@ reporting:
 
 view:
   default_audience: delivery # Valid options: delivery, executive, backlog_epic
-  show_dependencies: false # Valid options: true, false
+  show_dependencies: true # Valid options: true, false
 
 publish:
   directory: null # Set a local/mounted directory; relative paths use the workspace root.
@@ -324,14 +324,14 @@ Templates must retain these enum comments beside editable values. Generated HTML
 
 ### Visual theme
 
-Use the Redwood visual theme: warm neutral canvas and white cards, charcoal text, pine and teal accents, restrained sienna highlights, clear sans-serif typography, subtle borders, and modest corner radii. View selectors are compact clickable chips with a filled selected state and keyboard tab navigation. Status badges retain readable text labels alongside colour. Keep the header compact with the plan title and view navigation; omit the dark application banner and office branding. Place the three view chips, Print / PDF, and the settings icon at the top-right beside the plan title. Keep the reporting snapshot and dependency controls in a compact row below. On narrow screens, wrap the chips and actions above the title so neither overlaps or truncates it.
+Use the Redwood visual theme: warm neutral canvas and white cards, charcoal text, pine and teal accents, restrained sienna highlights, clear sans-serif typography, subtle borders, and modest corner radii. View selectors are compact clickable chips with a filled selected state and keyboard tab navigation. Status badges retain readable text labels alongside colour. Keep the header compact with the plan title and view navigation; omit the dark application banner and office branding. Place the three view chips, Print / PDF, and the settings icon at the top-right beside the plan title. Place the reporting date immediately to the right of the optional health badge in a shared title metadata group. Keep the date visible when health is hidden. Allow the metadata group to wrap below the title on narrow screens. Show dependencies belongs in Display settings. On narrow screens, wrap the chips and actions above the title so neither overlaps or truncates it.
 
 Maintain these styles in the shared renderer templates, so every generated plan inherits the same design. Use system fonts and inline assets to preserve offline portability. Keep vendor branding out of plan content and project documentation.
 
 ### Shared behavior
 
 - Show plan title, reporting date, and view navigation.
-- Provide an accessible Display settings overlay with independent toggles for count cards, search and filters, programme health, and the plan summary. When enabled, programme health is shown as a compact badge beside the title, wrapping below it on narrow screens. Clicking the badge opens an accessible assessment dialog; close and Escape restore focus to the badge. Missing health remains “Not provided”; no status is inferred. All four options are unchecked and hidden by default, including before JavaScript initializes. Provide Show all and Hide all actions to enable or hide all four optional elements, plus close and Escape actions, and restore focus to the settings button on dismissal.
+- Provide an accessible Display settings overlay with independent toggles for count cards, search and filters, programme health, the plan summary, and Show dependencies. When enabled, programme health is shown as a compact badge beside the title, wrapping below it on narrow screens. Clicking the badge opens an accessible assessment dialog; close and Escape restore focus to the badge. Missing health remains “Not provided”; no status is inferred. The four contextual panels are hidden by default, including before JavaScript initializes. Dependency visibility initially follows `view.show_dependencies` (true in new plans and the maintained example). Provide Show all and Hide all actions to toggle all five settings, plus close and Escape actions, and restore focus to the settings button on dismissal.
 - Apply display settings across all three views for the current page session. Reloading returns to the compact defaults. Settings do not change YAML, delivery data, or the generated artifact.
 - Hiding search/filter controls preserves active filters. Retain a visible result summary and Clear filters action whenever filters are active; retain selection context while a milestone is selected. Otherwise hide the result strip when filter controls are hidden.
 - Optional panels remain hidden in print unless enabled. Keep the reporting date and any active filter context in printed output. Executive risks, decisions, and exception reporting remain core view content.
@@ -346,14 +346,19 @@ Maintain these styles in the shared renderer templates, so every generated plan 
 
 ### Delivery View
 
-- Display all streams across all periods, including empty cells.
-- Start the board directly with period headings. Keep Show dependencies and Clear selection with the page's view controls, outside the board, without a separate roadmap title/subtitle bar. Hide roadmap controls in Backlog Epic View and when no roadmap can be rendered.
+- Render Delivery and Executive roadmaps as graph surfaces using accessible HTML nodes and SVG connectors. Retain faint period guides and a sticky period header, without boxed cells or a dedicated stream column.
+- Float each stream label above its nodes; keep labels visible during horizontal scrolling and reserve space so labels cannot cover cards. Retain empty streams with an empty-state message.
+- Position nodes deterministically within their target period using target dates when present; use stable source order for undated items and ties. Horizontal placement indicates order within a period, not an exact day-scale axis. Show the actual target date on the node.
+- Pack nodes into non-overlapping positions using measured card heights and spacing. Use available predecessor positions to align related milestones within a stream. Filtering may compact the arrangement. Never infer or change delivery dates from layout.
+- Show compact nodes with title, status, scope, target date/period, and epic summary. Keep outcome and ownership in accessible details. Backlog Epic View retains its detailed cards.
+- Keep normal scrolling and keyboard access. Pan/zoom, stream collapse, and drag-to-edit are future enhancements; this iteration does not persist user positions.
+- Start the board directly with period headings. Keep Show dependencies in Display settings and Clear selection beside the visible selection summary, without a separate roadmap title/subtitle bar. The dependency preference applies to Delivery and Executive roadmaps and is retained while visiting Backlog Epic View. Clearing selection returns focus to the view content.
 - Show milestone title, status, planned/unplanned tag, owner team, and related epic keys on cards or in accessible details depending on available space.
 - Offer filters for stream, owner/contributing team, status, tag, and epic.
 - Show outcome, notes, exact target date when present, ownership, epics, and incoming/outgoing relationships in card details.
 - Include Show dependencies and selected-milestone dependency highlighting. Distinguish direct links from any transitive chain highlighting.
 - Recalculate SVG connector positions after layout changes, filtering, resizing, and font/layout readiness. Connectors share the roadmap's scroll coordinate space.
-- Route connections through available gutters where practical and avoid covering card text. Provide textual relationship lists even when arrows are hidden.
+- Route connections around card bounds using orthogonal paths with rounded corners and side or vertical attachment points. Dim unrelated nodes and edges on selection. Provide textual relationship lists even when arrows are hidden. Print uses a flowing milestone register and textual dependencies instead of the interactive graph.
 - Suppress lines to filtered-out cards and show that additional linked items are hidden, with a way to reveal them.
 
 ### Executive View

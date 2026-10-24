@@ -584,7 +584,7 @@ reporting:
 
 view:
   default_audience: delivery # Valid options: delivery, executive, backlog_epic
-  show_dependencies: false # Valid options: true, false
+  show_dependencies: true # Valid options: true, false
 
 publish:
   directory: null
