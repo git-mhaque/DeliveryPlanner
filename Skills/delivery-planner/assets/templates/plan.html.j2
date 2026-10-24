@@ -13,6 +13,10 @@
   <main class="workspace">
     <section class="hero" aria-labelledby="plan-title">
       <div class="hero-copy"><h1 id="plan-title">{{ plan.title }}</h1><p class="hero-summary" id="plan-summary" hidden>{{ plan.get('summary', 'Your outcomes, teams, and dependencies in one place.') }}</p></div>
+      <div class="header-actions">
+        <button class="button compact-button" id="print-button" type="button"><span aria-hidden="true">↗</span> Print / PDF</button>
+        <button class="button icon-button" id="settings-button" type="button" aria-label="Display settings" title="Display settings" aria-haspopup="dialog" aria-controls="settings-dialog" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 3-.6 2.4-2 .9-2.2-.7-2 3.4L4 10.7v2.6l-1.8 1.7 2 3.4 2.2-.7 2 .9L9 21h6l.6-2.4 2-.9 2.2.7 2-3.4-1.8-1.7v-2.6L21.8 9l-2-3.4-2.2.7-2-.9L15 3Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      </div>
       <div class="health-card" id="health-card" hidden></div>
     </section>
     <section class="metrics" aria-label="Full plan milestone counts" id="metrics" hidden></section>
@@ -28,8 +32,6 @@
           <label class="toggle"><input id="show-dependencies" type="checkbox"> Show dependencies</label>
         </div>
         <span class="reporting-date">As of <time id="report-date"{% if plan.as_of %} datetime="{{ plan.as_of }}"{% endif %}>{{ plan.as_of or 'Draft' }}</time></span>
-        <button class="button compact-button" id="print-button" type="button"><span aria-hidden="true">↗</span> Print / PDF</button>
-        <button class="button icon-button" id="settings-button" type="button" aria-label="Display settings" title="Display settings" aria-haspopup="dialog" aria-controls="settings-dialog" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 3-.6 2.4-2 .9-2.2-.7-2 3.4L4 10.7v2.6l-1.8 1.7 2 3.4 2.2-.7 2 .9L9 21h6l.6-2.4 2-.9 2.2.7 2-3.4-1.8-1.7v-2.6L21.8 9l-2-3.4-2.2.7-2-.9L15 3Z"/><circle cx="12" cy="12" r="3"/></svg></button>
       </div>
     </div>
     <form class="filters" id="filters" aria-label="Filter milestones" onsubmit="return false" hidden>

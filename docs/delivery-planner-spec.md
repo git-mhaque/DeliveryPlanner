@@ -324,7 +324,7 @@ Templates must retain these enum comments beside editable values. Generated HTML
 
 ### Visual theme
 
-Use the Redwood visual theme: warm neutral canvas and white cards, charcoal text, pine and teal accents, restrained sienna highlights, clear sans-serif typography, subtle borders, and modest corner radii. Selected tabs use an underline. Status badges retain readable text labels alongside colour. Keep the header compact with the plan title and view navigation; omit the dark application banner and office branding. Place the reporting snapshot, Print / PDF, and a settings icon alongside the view tabs, wrapping neatly on narrow screens.
+Use the Redwood visual theme: warm neutral canvas and white cards, charcoal text, pine and teal accents, restrained sienna highlights, clear sans-serif typography, subtle borders, and modest corner radii. Selected tabs use an underline. Status badges retain readable text labels alongside colour. Keep the header compact with the plan title and view navigation; omit the dark application banner and office branding. Place Print / PDF and the settings icon at the top-right beside the plan title. Keep the reporting snapshot with the view controls. On narrow screens, put the two actions above the title so neither overlaps or truncates it.
 
 Maintain these styles in the shared renderer templates, so every generated plan inherits the same design. Use system fonts and inline assets to preserve offline portability. Keep vendor branding out of plan content and project documentation.
 

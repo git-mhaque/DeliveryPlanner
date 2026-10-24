@@ -17,12 +17,13 @@ a{color:var(--teal)}
 .button.subtle{background:#fbf9f8}
 .button.primary{background:var(--primary);color:white;border-color:var(--primary)}
 .workspace{max-width:1800px;margin:auto;padding:28px 32px 24px}
-.hero{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:16px}
-.hero-copy{flex:1;min-width:0}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:12px 24px;margin-bottom:16px}
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px}
+.hero-copy{min-width:0}
 .eyebrow{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--muted)}
 h1{font-size:clamp(25px,2.2vw,32px);line-height:1.25;letter-spacing:-.7px;margin:0;font-weight:650;overflow-wrap:anywhere}
 .hero-summary{font-size:13px;color:var(--muted);line-height:1.65;margin:9px 0 0;max-width:900px}
-.health-card{flex:0 0 260px;padding:12px 16px;border-left:3px solid #b58535;background:#fcf4e6;border-radius:0 6px 6px 0}
+.health-card{grid-column:1/-1;justify-self:end;width:min(100%,420px);padding:12px 16px;border-left:3px solid #b58535;background:#fcf4e6;border-radius:0 6px 6px 0}
 .health-card.health-on_track{border-color:var(--teal);background:var(--teal-bg)}
 .health-card.health-blocked{border-color:var(--red);background:var(--red-bg)}
 .health-card.health-unknown{border-color:#8b8580;background:#f1efed}
@@ -199,7 +200,6 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 }
 
 @media(max-width:1150px){.workspace{padding:26px 24px}
-.health-card{flex-basis:230px}
 .metric{padding:16px;gap:12px}
 .exec-grid{grid-template-columns:1fr 1fr}
 .exec-grid .report-card:first-child{grid-column:1/-1}
@@ -209,9 +209,11 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 }
 
 @media(max-width:700px){.workspace{padding:20px 15px}
-.hero{display:block;margin-bottom:14px}
+.hero{grid-template-columns:1fr;margin-bottom:14px}
+.header-actions{grid-row:1;justify-self:end}
+.hero-copy{grid-row:2}
 .hero-summary{font-size:12px}
-.health-card{margin-top:18px;padding:12px 15px}
+.health-card{width:100%;padding:12px 15px}
 .hero h1{font-size:25px;letter-spacing:-.5px}
 .eyebrow{font-size:8px;gap:6px;letter-spacing:1px}
 .metrics{grid-template-columns:1fr 1fr;margin-bottom:20px}
@@ -222,8 +224,8 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .metric-label{font-size:10px}
 .metric-note{font-size:9px}
 .utility-actions{width:100%;order:-1;justify-content:flex-end}
-.roadmap-controls{order:1;flex-basis:100%;justify-content:flex-end;margin-right:0}
-.reporting-date{margin-right:auto}
+.roadmap-controls{margin-right:0}
+.reporting-date{order:-1;margin-right:auto}
 .view-tabs{width:100%}
 .view-tabs button{flex:1;padding:10px 6px;font-size:11px;gap:4px}
 .filters{gap:9px;padding:12px}
@@ -257,10 +259,10 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 @media print{.utility-actions{order:0;width:auto}
 body{background:white;color:#312d2a;font-size:10px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
 .workspace{padding:16px 0;max-width:none}
-.skip-link,.utility-actions button,.filters,.roadmap-controls,.reset-button,.diagnostics,dialog{display:none!important}
-.hero{margin-bottom:15px;gap:25px}
+.skip-link,.header-actions,.utility-actions button,.filters,.roadmap-controls,.reset-button,.diagnostics,dialog{display:none!important}
+.hero{grid-template-columns:1fr;margin-bottom:15px;gap:12px}
+.hero-copy{grid-row:auto}
 h1{font-size:28px}
-.health-card{flex-basis:230px}
 .hero-summary{font-size:11px}
 .metrics{margin-bottom:15px}
 .metric{padding:12px}
