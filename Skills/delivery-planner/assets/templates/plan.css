@@ -148,7 +148,7 @@ h1{font-size:clamp(25px,2.2vw,32px);line-height:1.25;letter-spacing:-.7px;margin
 .diagnostics ul{line-height:1.8;padding-left:20px}
 .page-footer{display:flex;justify-content:space-between;gap:20px;margin-top:28px;font-size:9px;color:#6f6964;line-height:1.6}
 .footer-divider{padding:0 8px}
-dialog{width:min(570px,calc(100vw - 30px));max-height:calc(100vh - 48px);padding:0;border:1px solid #d4cfca;border-radius:8px;box-shadow:0 24px 90px #312d2a3d;color:var(--ink)}
+dialog{width:min(570px,calc(100vw - 30px));max-height:min(80vh,720px);padding:0;border:1px solid #d4cfca;border-radius:8px;box-shadow:0 24px 90px #312d2a3d;color:var(--ink)}
 dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .detail-head{padding:24px 26px 18px;border-bottom:1px solid var(--line);position:relative}
 .detail-head .badge{font-size:10px}
@@ -168,7 +168,17 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .relationship p{font-size:10px;color:var(--muted);margin-top:5px}
 .relationship-label{font-size:9px;letter-spacing:.5px;color:var(--muted);margin-bottom:5px}
 .hidden-hint{font-size:9px;color:#825512}
-.detail-footer{margin-top:22px;display:flex;gap:8px}
+#milestone-dialog{width:min(520px,calc(100vw - 30px));height:min(78vh,680px);overflow:hidden}
+#detail-content{display:flex;flex-direction:column;height:100%;min-height:0}
+#milestone-dialog .detail-head{padding:18px 22px 14px;flex:none;max-height:35%;overflow:auto}
+#milestone-dialog .detail-head h2{font-size:20px;margin:10px 30px 7px 0}
+#milestone-dialog .detail-body{padding:16px 22px;overflow:auto;min-height:0;flex:1;overscroll-behavior:contain}
+#milestone-dialog .detail-grid{gap:12px;margin-bottom:16px}
+#milestone-dialog .detail-body h3{margin-top:16px}
+.detail-footer{display:flex;gap:8px;flex:none;padding:12px 22px;border-top:1px solid var(--line);background:#fbf9f8}
+.settings-dialog[open]{display:flex;flex-direction:column;overflow:hidden}
+.settings-dialog .settings-head,.settings-dialog .settings-footer{flex:none}
+.settings-dialog .settings-body,.settings-dialog>.detail-body{overflow:auto;min-height:0;overscroll-behavior:contain}
 .no-script{background:white;padding:24px}
 .no-script article{break-inside:avoid;border-top:1px solid var(--line);padding:14px 0}
 

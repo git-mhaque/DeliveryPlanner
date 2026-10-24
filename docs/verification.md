@@ -68,6 +68,7 @@ Inspected the generated HTML through a localhost-only server in the Codex browse
 - Print / PDF and Settings align at the top-right on desktop. At 390 pixels they sit above the title without overlap; the health badge wraps below the title, and dismissing settings returns focus to its relocated button.
 - Clicking programme health opens its full assessment. Close and Escape dismiss the dialog, and Escape returns focus to the badge. At 390 pixels the assessment dialog fits inside the viewport (337 pixels wide), with no page-wide horizontal overflow. Dependency lines still render after the header change.
 - At 1920 pixels, the date is 10 pixels to the right of the health badge. At 390 pixels both remain together below the title without page-wide horizontal overflow. The date remains visible with health hidden. Show all renders all 21 dependency lines; Hide all followed by Clear selection removes the lines and selection context.
+- Milestone overlays measure 520 × 680 pixels at a 1440 × 1000 viewport. Scrolling the body leaves the heading and footer fixed. At 390 × 844 the overlay fits inside the viewport, with accessible close/actions; Settings is capped at 80% viewport height with its footer visible.
 - No JavaScript errors were reported during the inspected interactions.
 
 ## Remaining manual browser checks
