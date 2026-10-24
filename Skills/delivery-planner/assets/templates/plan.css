@@ -18,7 +18,7 @@ a{color:var(--teal)}
 .button.primary{background:var(--primary);color:white;border-color:var(--primary)}
 .workspace{max-width:1800px;margin:auto;padding:28px 32px 24px}
 .hero{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:12px 24px;margin-bottom:16px}
-.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px}
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;max-width:520px}
 .hero-copy{min-width:0}
 .eyebrow{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--muted)}
 h1{font-size:clamp(25px,2.2vw,32px);line-height:1.25;letter-spacing:-.7px;margin:0;font-weight:650;overflow-wrap:anywhere}
@@ -38,9 +38,9 @@ h1{font-size:clamp(25px,2.2vw,32px);line-height:1.25;letter-spacing:-.7px;margin
 .metric-number.teal{color:var(--teal)}
 .metric-number.amber{color:var(--amber)}
 .navigation-row{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;margin-bottom:16px}
-.view-tabs{display:flex;gap:8px;border-bottom:1px solid #bcb6b1;padding:0}
-.view-tabs button{border:0;border-bottom:3px solid transparent;background:transparent;padding:10px 12px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--muted)}
-.view-tabs button[aria-selected=true]{border-bottom-color:var(--primary);color:var(--ink);background:transparent}
+.view-tabs{display:flex;gap:5px;padding:0;flex-wrap:wrap}
+.view-tabs button{border:1px solid var(--line);border-radius:16px;background:var(--paper);min-height:32px;padding:6px 10px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:5px;color:var(--muted);white-space:nowrap}
+.view-tabs button[aria-selected=true]{border-color:var(--primary);color:#fff;background:var(--primary)}
 .filters{display:flex;align-items:end;gap:10px;flex-wrap:wrap;background:white;padding:14px 16px;border:1px solid var(--line);border-radius:8px}
 .filters label{display:flex;flex-direction:column;gap:6px;flex:1 1 110px;min-width:105px}
 .filters .search-filter{flex:1.5 1 180px}
@@ -170,6 +170,7 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .no-script article{break-inside:avoid;border-top:1px solid var(--line);padding:14px 0}
 
 .view-tabs button:hover{background:#ece9e6}
+.view-tabs button[aria-selected=true]:hover{background:var(--primary)}
 
 .utility-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-left:auto}
 .reporting-date{font-size:11px;color:var(--muted);white-space:nowrap}
@@ -189,6 +190,7 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .setting-row small{display:block;font-size:11px;line-height:1.6;color:var(--muted);margin-top:5px}
 .setting-row input{width:18px;height:18px;margin:0;flex:none;accent-color:var(--primary);cursor:pointer}
 .settings-note{font-size:11px;line-height:1.7;color:var(--muted);margin:16px 0 0}
+.settings-bulk-actions{display:flex;gap:8px}
 .settings-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 24px;border-top:1px solid var(--line);background:#fbf9f8}
 
 @media(min-width:1600px){.milestone-title{font-size:13px}
@@ -224,8 +226,8 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .utility-actions{width:100%;order:-1;justify-content:flex-end}
 .roadmap-controls{margin-right:0}
 .reporting-date{order:-1;margin-right:auto}
-.view-tabs{width:100%}
-.view-tabs button{flex:1;padding:10px 6px;font-size:11px;gap:4px}
+.view-tabs{width:100%;justify-content:flex-end}
+.view-tabs button{padding:6px;font-size:10px;gap:3px}
 .filters{gap:9px;padding:12px}
 .filters .search-filter{flex-basis:100%}
 .filters label{flex-basis:calc(33% - 12px);min-width:85px}
@@ -257,9 +259,10 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 @media print{.utility-actions{order:0;width:auto}
 body{background:white;color:#312d2a;font-size:10px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
 .workspace{padding:16px 0;max-width:none}
-.skip-link,.header-actions,.utility-actions button,.filters,.roadmap-controls,.reset-button,.diagnostics,dialog{display:none!important}
+.skip-link,.header-actions>.button,.utility-actions button,.filters,.roadmap-controls,.reset-button,.diagnostics,dialog{display:none!important}
 .hero{grid-template-columns:1fr;margin-bottom:15px;gap:12px}
 .hero-copy{grid-row:auto}
+.header-actions{grid-row:auto;justify-content:flex-start;justify-self:start;max-width:none}
 h1{font-size:28px}
 .hero-summary{font-size:11px}
 .metrics{margin-bottom:15px}

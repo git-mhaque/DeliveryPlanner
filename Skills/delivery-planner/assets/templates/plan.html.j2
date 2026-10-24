@@ -14,17 +14,18 @@
     <section class="hero" aria-labelledby="plan-title">
       <div class="hero-copy"><div class="title-row"><h1 id="plan-title">{{ plan.title }}</h1><div class="health-card" id="health-card" hidden><button class="health-button" id="health-button" type="button" aria-haspopup="dialog" aria-controls="health-dialog" aria-expanded="false"><span>Programme health</span><span id="health-status"></span><span aria-hidden="true">ⓘ</span></button></div></div><p class="hero-summary" id="plan-summary" hidden>{{ plan.get('summary', 'Your outcomes, teams, and dependencies in one place.') }}</p></div>
       <div class="header-actions">
+      <nav class="view-tabs" role="tablist" aria-label="Plan views">
+        <button type="button" id="tab-delivery" role="tab" data-view="delivery" aria-controls="view-content">▦ <span>Delivery View</span></button>
+        <button type="button" id="tab-executive" role="tab" data-view="executive" aria-controls="view-content">◈ <span>Executive View</span></button>
+        <button type="button" id="tab-backlog_epic" role="tab" data-view="backlog_epic" aria-controls="view-content">☷ <span>Backlog Epic View</span></button>
+      </nav>
         <button class="button compact-button" id="print-button" type="button"><span aria-hidden="true">↗</span> Print / PDF</button>
         <button class="button icon-button" id="settings-button" type="button" aria-label="Display settings" title="Display settings" aria-haspopup="dialog" aria-controls="settings-dialog" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 3-.6 2.4-2 .9-2.2-.7-2 3.4L4 10.7v2.6l-1.8 1.7 2 3.4 2.2-.7 2 .9L9 21h6l.6-2.4 2-.9 2.2.7 2-3.4-1.8-1.7v-2.6L21.8 9l-2-3.4-2.2.7-2-.9L15 3Z"/><circle cx="12" cy="12" r="3"/></svg></button>
       </div>
     </section>
     <section class="metrics" aria-label="Full plan milestone counts" id="metrics" hidden></section>
     <div class="navigation-row">
-      <nav class="view-tabs" role="tablist" aria-label="Plan views">
-        <button type="button" id="tab-delivery" role="tab" data-view="delivery" aria-controls="view-content">▦ <span>Delivery View</span></button>
-        <button type="button" id="tab-executive" role="tab" data-view="executive" aria-controls="view-content">◈ <span>Executive View</span></button>
-        <button type="button" id="tab-backlog_epic" role="tab" data-view="backlog_epic" aria-controls="view-content">☷ <span>Backlog Epic View</span></button>
-      </nav>
+
       <div class="utility-actions">
         <div class="roadmap-controls" id="roadmap-controls" hidden>
           <button class="button selection-clear" id="clear-selection" type="button" hidden>Clear selection</button>
@@ -58,7 +59,7 @@
       <label class="setting-row"><span><strong>Plan summary</strong><small>The short description below the plan title.</small></span><input id="display-summary" type="checkbox" aria-label="Plan summary" aria-controls="plan-summary"></label>
       <p class="settings-note">Applies across all three views until you reload this page. Active filters remain applied when their controls are hidden.</p>
     </div>
-    <div class="settings-footer"><button class="button" id="hide-all-panels" type="button">Hide all</button><button class="button primary" id="done-settings" type="button">Done</button></div>
+    <div class="settings-footer"><div class="settings-bulk-actions"><button class="button" id="show-all-panels" type="button">Show all</button><button class="button" id="hide-all-panels" type="button">Hide all</button></div><button class="button primary" id="done-settings" type="button">Done</button></div>
   </dialog>
   <dialog id="health-dialog" class="settings-dialog" aria-labelledby="health-title" aria-describedby="health-note">
     <div class="settings-head"><h2 id="health-title">Programme health</h2><button class="close-detail" id="close-health" type="button" aria-label="Close programme health" autofocus>×</button><div id="health-detail-status"></div></div>

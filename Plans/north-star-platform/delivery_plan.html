@@ -26,7 +26,7 @@ a{color:var(--teal)}
 .button.primary{background:var(--primary);color:white;border-color:var(--primary)}
 .workspace{max-width:1800px;margin:auto;padding:28px 32px 24px}
 .hero{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:12px 24px;margin-bottom:16px}
-.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px}
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;max-width:520px}
 .hero-copy{min-width:0}
 .eyebrow{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--muted)}
 h1{font-size:clamp(25px,2.2vw,32px);line-height:1.25;letter-spacing:-.7px;margin:0;font-weight:650;overflow-wrap:anywhere}
@@ -46,9 +46,9 @@ h1{font-size:clamp(25px,2.2vw,32px);line-height:1.25;letter-spacing:-.7px;margin
 .metric-number.teal{color:var(--teal)}
 .metric-number.amber{color:var(--amber)}
 .navigation-row{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;margin-bottom:16px}
-.view-tabs{display:flex;gap:8px;border-bottom:1px solid #bcb6b1;padding:0}
-.view-tabs button{border:0;border-bottom:3px solid transparent;background:transparent;padding:10px 12px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--muted)}
-.view-tabs button[aria-selected=true]{border-bottom-color:var(--primary);color:var(--ink);background:transparent}
+.view-tabs{display:flex;gap:5px;padding:0;flex-wrap:wrap}
+.view-tabs button{border:1px solid var(--line);border-radius:16px;background:var(--paper);min-height:32px;padding:6px 10px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:5px;color:var(--muted);white-space:nowrap}
+.view-tabs button[aria-selected=true]{border-color:var(--primary);color:#fff;background:var(--primary)}
 .filters{display:flex;align-items:end;gap:10px;flex-wrap:wrap;background:white;padding:14px 16px;border:1px solid var(--line);border-radius:8px}
 .filters label{display:flex;flex-direction:column;gap:6px;flex:1 1 110px;min-width:105px}
 .filters .search-filter{flex:1.5 1 180px}
@@ -178,6 +178,7 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .no-script article{break-inside:avoid;border-top:1px solid var(--line);padding:14px 0}
 
 .view-tabs button:hover{background:#ece9e6}
+.view-tabs button[aria-selected=true]:hover{background:var(--primary)}
 
 .utility-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-left:auto}
 .reporting-date{font-size:11px;color:var(--muted);white-space:nowrap}
@@ -197,6 +198,7 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .setting-row small{display:block;font-size:11px;line-height:1.6;color:var(--muted);margin-top:5px}
 .setting-row input{width:18px;height:18px;margin:0;flex:none;accent-color:var(--primary);cursor:pointer}
 .settings-note{font-size:11px;line-height:1.7;color:var(--muted);margin:16px 0 0}
+.settings-bulk-actions{display:flex;gap:8px}
 .settings-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 24px;border-top:1px solid var(--line);background:#fbf9f8}
 
 @media(min-width:1600px){.milestone-title{font-size:13px}
@@ -232,8 +234,8 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 .utility-actions{width:100%;order:-1;justify-content:flex-end}
 .roadmap-controls{margin-right:0}
 .reporting-date{order:-1;margin-right:auto}
-.view-tabs{width:100%}
-.view-tabs button{flex:1;padding:10px 6px;font-size:11px;gap:4px}
+.view-tabs{width:100%;justify-content:flex-end}
+.view-tabs button{padding:6px;font-size:10px;gap:3px}
 .filters{gap:9px;padding:12px}
 .filters .search-filter{flex-basis:100%}
 .filters label{flex-basis:calc(33% - 12px);min-width:85px}
@@ -265,9 +267,10 @@ dialog::backdrop{background:#312d2a66;backdrop-filter:blur(2px)}
 @media print{.utility-actions{order:0;width:auto}
 body{background:white;color:#312d2a;font-size:10px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
 .workspace{padding:16px 0;max-width:none}
-.skip-link,.header-actions,.utility-actions button,.filters,.roadmap-controls,.reset-button,.diagnostics,dialog{display:none!important}
+.skip-link,.header-actions>.button,.utility-actions button,.filters,.roadmap-controls,.reset-button,.diagnostics,dialog{display:none!important}
 .hero{grid-template-columns:1fr;margin-bottom:15px;gap:12px}
 .hero-copy{grid-row:auto}
+.header-actions{grid-row:auto;justify-content:flex-start;justify-self:start;max-width:none}
 h1{font-size:28px}
 .hero-summary{font-size:11px}
 .metrics{margin-bottom:15px}
@@ -320,17 +323,18 @@ h1{font-size:28px}
     <section class="hero" aria-labelledby="plan-title">
       <div class="hero-copy"><div class="title-row"><h1 id="plan-title">North Star Platform Delivery Plan</h1><div class="health-card" id="health-card" hidden><button class="health-button" id="health-button" type="button" aria-haspopup="dialog" aria-controls="health-dialog" aria-expanded="false"><span>Programme health</span><span id="health-status"></span><span aria-hidden="true">ⓘ</span></button></div></div><p class="hero-summary" id="plan-summary" hidden>A shared roadmap for better discovery, a resilient platform, and a confident rollout. Fictional public example.</p></div>
       <div class="header-actions">
+      <nav class="view-tabs" role="tablist" aria-label="Plan views">
+        <button type="button" id="tab-delivery" role="tab" data-view="delivery" aria-controls="view-content">▦ <span>Delivery View</span></button>
+        <button type="button" id="tab-executive" role="tab" data-view="executive" aria-controls="view-content">◈ <span>Executive View</span></button>
+        <button type="button" id="tab-backlog_epic" role="tab" data-view="backlog_epic" aria-controls="view-content">☷ <span>Backlog Epic View</span></button>
+      </nav>
         <button class="button compact-button" id="print-button" type="button"><span aria-hidden="true">↗</span> Print / PDF</button>
         <button class="button icon-button" id="settings-button" type="button" aria-label="Display settings" title="Display settings" aria-haspopup="dialog" aria-controls="settings-dialog" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 3-.6 2.4-2 .9-2.2-.7-2 3.4L4 10.7v2.6l-1.8 1.7 2 3.4 2.2-.7 2 .9L9 21h6l.6-2.4 2-.9 2.2.7 2-3.4-1.8-1.7v-2.6L21.8 9l-2-3.4-2.2.7-2-.9L15 3Z"/><circle cx="12" cy="12" r="3"/></svg></button>
       </div>
     </section>
     <section class="metrics" aria-label="Full plan milestone counts" id="metrics" hidden></section>
     <div class="navigation-row">
-      <nav class="view-tabs" role="tablist" aria-label="Plan views">
-        <button type="button" id="tab-delivery" role="tab" data-view="delivery" aria-controls="view-content">▦ <span>Delivery View</span></button>
-        <button type="button" id="tab-executive" role="tab" data-view="executive" aria-controls="view-content">◈ <span>Executive View</span></button>
-        <button type="button" id="tab-backlog_epic" role="tab" data-view="backlog_epic" aria-controls="view-content">☷ <span>Backlog Epic View</span></button>
-      </nav>
+
       <div class="utility-actions">
         <div class="roadmap-controls" id="roadmap-controls" hidden>
           <button class="button selection-clear" id="clear-selection" type="button" hidden>Clear selection</button>
@@ -364,7 +368,7 @@ h1{font-size:28px}
       <label class="setting-row"><span><strong>Plan summary</strong><small>The short description below the plan title.</small></span><input id="display-summary" type="checkbox" aria-label="Plan summary" aria-controls="plan-summary"></label>
       <p class="settings-note">Applies across all three views until you reload this page. Active filters remain applied when their controls are hidden.</p>
     </div>
-    <div class="settings-footer"><button class="button" id="hide-all-panels" type="button">Hide all</button><button class="button primary" id="done-settings" type="button">Done</button></div>
+    <div class="settings-footer"><div class="settings-bulk-actions"><button class="button" id="show-all-panels" type="button">Show all</button><button class="button" id="hide-all-panels" type="button">Hide all</button></div><button class="button primary" id="done-settings" type="button">Done</button></div>
   </dialog>
   <dialog id="health-dialog" class="settings-dialog" aria-labelledby="health-title" aria-describedby="health-note">
     <div class="settings-head"><h2 id="health-title">Programme health</h2><button class="close-detail" id="close-health" type="button" aria-label="Close programme health" autofocus>×</button><div id="health-detail-status"></div></div>
@@ -595,7 +599,7 @@ h1{font-size:28px}
     $('clear-selection').addEventListener('click',()=>{state.selected=null;render();$('show-dependencies').focus({preventScroll:true});});
     $('settings-button').addEventListener('click',()=>{$('settings-dialog').showModal();$('settings-button').setAttribute('aria-expanded','true');});
     for (const key of Object.keys(display)) $(`display-${key}`).addEventListener('change',event=>{display[key]=event.target.checked;applyDisplay();});
-    $('hide-all-panels').addEventListener('click',()=>{Object.keys(display).forEach(key=>display[key]=false);applyDisplay();});
+    for (const [id,visible] of [['show-all-panels',true],['hide-all-panels',false]]) $(id).addEventListener('click',()=>{Object.keys(display).forEach(key=>display[key]=visible);applyDisplay();});
     for (const id of ['close-settings','done-settings']) $(id).addEventListener('click',()=>$('settings-dialog').close());
     $('settings-dialog').addEventListener('click',event=>{if(event.target===$('settings-dialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close();}});
     $('settings-dialog').addEventListener('close',()=>{$('settings-button').setAttribute('aria-expanded','false');$('settings-button').focus({preventScroll:true});});

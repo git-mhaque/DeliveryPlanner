@@ -221,7 +221,7 @@
     $('clear-selection').addEventListener('click',()=>{state.selected=null;render();$('show-dependencies').focus({preventScroll:true});});
     $('settings-button').addEventListener('click',()=>{$('settings-dialog').showModal();$('settings-button').setAttribute('aria-expanded','true');});
     for (const key of Object.keys(display)) $(`display-${key}`).addEventListener('change',event=>{display[key]=event.target.checked;applyDisplay();});
-    $('hide-all-panels').addEventListener('click',()=>{Object.keys(display).forEach(key=>display[key]=false);applyDisplay();});
+    for (const [id,visible] of [['show-all-panels',true],['hide-all-panels',false]]) $(id).addEventListener('click',()=>{Object.keys(display).forEach(key=>display[key]=visible);applyDisplay();});
     for (const id of ['close-settings','done-settings']) $(id).addEventListener('click',()=>$('settings-dialog').close());
     $('settings-dialog').addEventListener('click',event=>{if(event.target===$('settings-dialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close();}});
     $('settings-dialog').addEventListener('close',()=>{$('settings-button').setAttribute('aria-expanded','false');$('settings-button').focus({preventScroll:true});});
